@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<title>Irlanda - Cadastrar Moradia</title>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<nav class="topbar">
+<a href="home.html" class="logo">[ reStart ]</a>
+<div class="user-name">João Silva</div>
+</nav>
+
+<div class="country-container">
+<h2>Irlanda — Quero Ajudar</h2>
+
+<form class="login-box" id="housingFormIE">
+<input type="text" id="city" placeholder="Cidade">
+<input type="text" id="type" placeholder="Tipo de moradia">
+<input type="text" id="duration" placeholder="Tempo disponível">
+<button type="submit">Cadastrar</button>
+</form>
+
+</div>
+
+<script src="../../js/app.js"></script>
+<script>
+document.getElementById("housingFormIE").addEventListener("submit", function(e){
+e.preventDefault()
+const city = document.getElementById("city").value
+const type = document.getElementById("type").value
+const duration = document.getElementById("duration").value
+addHousing("Ireland", city, type, duration) // adicionando país
+alert("Moradia cadastrada na Irlanda!")
+})
+</script>
+
+</body>
+</html>
