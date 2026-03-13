@@ -17,6 +17,15 @@
 
 <a href="home.html" class="logo">[ reStart ]</a>
 
+<!-- INDICADOR DE PAÍS -->
+<div class="country-indicator">
+
+<img src="https://flagcdn.com/w40/au.png">
+
+<span>Austrália</span>
+
+</div>
+
 <div class="user-name">
 João Silva
 </div>
@@ -25,30 +34,41 @@ João Silva
 
 <div class="country-container">
 
-<h2>Austrália</h2>
-
 <div class="countries">
 
 <a href="australia-help.html" class="country-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png">
+<img src="images/help-icon-1.svg">
 
-<p>Preciso de Ajuda</p>
+<p>Buscar ajuda</p>
 
 </a>
 
 
 <a href="australia-offer.html" class="country-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/929/929426.png">
+<img src="images/helping-icon-1.svg" stroke="white">
 
-<p>Quero Ajudar</p>
+<p>Oferecer ajuda</p>
 
 </a>
 
 </div>
 
 </div>
+
+<script>
+const bg = document.querySelector(".background");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = (window.innerWidth / 2 - e.clientX) / 60;
+    const y = (window.innerHeight / 2 - e.clientY) / 60;
+
+    bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+
+});
+</script>
 
 </body>
 

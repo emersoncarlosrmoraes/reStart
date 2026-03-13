@@ -31,7 +31,27 @@
     </p>
 </div>
 
-<script src="../js/app.js"></script>
+<div class="page-transition"></div>
+
+<script>
+
+const form = document.querySelector("form");
+const transition = document.querySelector(".page-transition");
+
+form.addEventListener("submit", function(e){
+
+transition.classList.add("active");
+document.body.classList.add("fade-out");
+
+setTimeout(()=>{
+window.location.href="home.html";
+},600);
+
+e.preventDefault();
+
+});
+
+</script>
 
 </body>
 </html>
