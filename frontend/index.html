@@ -34,6 +34,19 @@
 <div class="page-transition"></div>
 
 <script>
+const bg = document.querySelector(".background");
+
+document.addEventListener("mousemove", (e) => {
+
+    const x = (window.innerWidth / 2 - e.clientX) / 60;
+    const y = (window.innerHeight / 2 - e.clientY) / 60;
+
+    bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+
+});
+</script>
+
+<script>
 
 const form = document.querySelector("form");
 const transition = document.querySelector(".page-transition");
