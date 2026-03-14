@@ -6,6 +6,7 @@
 <title>Re(start) - Austrália</title>
 
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
@@ -17,17 +18,17 @@
 
 <a href="home.html" class="logo">[ reStart ]</a>
 
-<!-- INDICADOR DE PAÍS -->
-<div class="country-indicator">
+<img class="country-flag" src="https://flagcdn.com/w40/au.png">
 
-<img src="https://flagcdn.com/w40/au.png">
+<!-- AREA USUARIO -->
+<div class="user-area">
 
-<span>Austrália</span>
+<div class="avatar" id="avatar">?</div>
 
+<div class="user-name" id="userName">
+Carregando...
 </div>
 
-<div class="user-name">
-João Silva
 </div>
 
 </nav>
@@ -47,7 +48,7 @@ João Silva
 
 <a href="australia-offer.html" class="country-card">
 
-<img src="images/helping-icon-1.svg" stroke="white">
+<img src="images/helping-icon-1.svg">
 
 <p>Oferecer ajuda</p>
 
@@ -57,19 +58,64 @@ João Silva
 
 </div>
 
+<!-- BOTÃO LOGOUT -->
+<div class="logout-button" id="logoutBtn">
+Log out
+</div>
+
+<script src="../js/supabase.js"></script>
+
 <script>
-const bg = document.querySelector(".background");
 
-document.addEventListener("mousemove", (e) => {
+/* background movimento */
 
-    const x = (window.innerWidth / 2 - e.clientX) / 60;
-    const y = (window.innerHeight / 2 - e.clientY) / 60;
+const bg = document.querySelector(".background")
 
-    bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+document.addEventListener("mousemove",(e)=>{
 
-});
+const x=(window.innerWidth/2-e.clientX)/60
+const y=(window.innerHeight/2-e.clientY)/60
+
+bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
+
+})
+
+/* carregar usuário */
+
+async function loadUser(){
+
+const { data } = await supabase.auth.getUser()
+
+if(!data.user){
+
+window.location.href="index.html"
+return
+
+}
+
+const name = data.user.user_metadata.name || "Usuário"
+
+document.getElementById("userName").textContent = name
+
+const initial = name.charAt(0).toUpperCase()
+
+document.getElementById("avatar").textContent = initial
+
+}
+
+loadUser()
+
+/* logout */
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+
+await supabase.auth.signOut()
+
+window.location.href="index.html"
+
+})
+
 </script>
 
 </body>
-
 </html>

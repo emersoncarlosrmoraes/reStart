@@ -1,16 +1,17 @@
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: Arial, Helvetica, sans-serif;
 }
 
 body{
-    height:100vh;
-    overflow:hidden;
+height:100vh;
+overflow:hidden;
 }
 
-/* BACKGROUND - padrão com blur */
+/* BACKGROUND */
+
 .background{
 position:fixed;
 width:100%;
@@ -24,118 +25,143 @@ filter: blur(5px);
 transition: transform 0.2s ease-out;
 }
 
-/* SEM BLUR NA INDEX */
 body.index .background{
-    filter: none; /* index mostra a imagem completa */
+filter:none;
 }
 
-/* BARRA SUPERIOR INVISÍVEL PARA POSICIONAMENTO */
+/* TOPBAR */
+
 .topbar{
-    position:relative;
-    width:100%;
-    height:55px;
-    background:transparent;
+position:relative;
+width:100%;
+height:55px;
 }
 
-/* LOGO - sempre branca e do mesmo tamanho */
+/* LOGO */
+
 .topbar .logo{
-    position:absolute;
-    top:15px; 
-    left:15px;
-    color:white;
-    border:0.5px solid rgba(255,255,255,0.5);
-    font-size:18px;
-    font-weight:bold;
-    padding:6px 12px;
-    border-radius:4px;
-    letter-spacing:1px;
-    text-decoration:none;
-    cursor:pointer;
+
+position:absolute;
+top:15px;
+left:15px;
+
+color:white;
+border:0.5px solid rgba(255,255,255,0.5);
+
+font-size:18px;
+font-weight:bold;
+
+padding:6px 12px;
+
+border-radius:4px;
+
+letter-spacing:1px;
+
+text-decoration:none;
+
+cursor:pointer;
+
 }
 
 .topbar .logo:hover{
 background:rgba(255,255,255,0.1);
 }
 
-/* NOME DO USUÁRIO - canto direito */
-.user-name{
-    position:absolute;
-    top:15px;
-    right:15px;
-    font-weight:bold;
-    color:white;
+/* BANDEIRA */
+
+.country-flag{
+
+position:absolute;
+
+top:23px;
+left:140px;
+
+width:37px;
+
 }
 
-/* LOGIN BOX (index ou login page) */
+/* USER */
+
+.user-name{
+position:absolute;
+top:15px;
+right:15px;
+font-weight:bold;
+color:white;
+}
+
+/* LOGIN */
+
 .login-container{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:320px;
-    padding:35px;
-    background:rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    border-radius:12px;
-    color:white;
-    text-align:center;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:320px;
+padding:35px;
+background:rgba(255,255,255,0.1);
+backdrop-filter: blur(15px);
+border-radius:12px;
+color:white;
+text-align:center;
 }
 
 .login-container h2{
-    margin-bottom:20px;
+margin-bottom:20px;
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-    border:none;
-    border-radius:6px;
-    outline:none;
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+outline:none;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:6px;
-    background:#ffffff;
-    color:#333;
-    font-weight:bold;
-    cursor:pointer;
+width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:#ffffff;
+color:#333;
+font-weight:bold;
+cursor:pointer;
 }
 
 button:hover{
-    background:#eeeeee;
+background:#eeeeee;
 }
 
 .register-link{
-    margin-top:15px;
-    font-size:14px;
+margin-top:15px;
+font-size:14px;
 }
 
 .register-link a{
-    color:white;
-    text-decoration:underline;
+color:white;
+text-decoration:underline;
 }
 
-/* COUNTRY SELECTION (index) */
+/* COUNTRY SELECTION */
+
 .country-container{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
-    color:white;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+color:white;
 }
 
 .country-container h2{
-    margin-bottom:40px;
+margin-bottom:40px;
 }
 
 .countries{
-    display:flex;
-    gap:60px;
+display:flex;
+gap:60px;
 }
 
 .country-card{
@@ -155,15 +181,11 @@ border:1px solid rgba(255,255,255,0.15);
 box-shadow:0 10px 30px rgba(0,0,0,0.25);
 }
 
-/* BANDEIRA */
-
 .country-card img{
 width:150px;
 border-radius:8px;
 margin-bottom:10px;
 }
-
-/* HOVER */
 
 .country-card:hover{
 
@@ -178,11 +200,11 @@ border:1px solid rgba(255,255,255,0.25);
 }
 
 .country-card p{
-    margin-top:10px;
-    font-size:18px;
+margin-top:10px;
+font-size:18px;
 }
 
-/* SLOGAN AO LADO DA LOGO */
+/* SLOGAN HOME */
 
 .home-slogan{
 position:absolute;
@@ -193,7 +215,7 @@ font-size:17px;
 white-space:nowrap;
 }
 
-/* HOME HERO LAYOUT */
+/* HERO */
 
 .home-hero{
 position:absolute;
@@ -205,15 +227,11 @@ color:white;
 width:1150px;
 }
 
-/* TITULO */
-
 .home-title{
 font-size:28px;
 margin-bottom:50px;
 font-weight:600;
 }
-
-/* BANDEIRAS CENTRALIZADAS */
 
 .home-countries{
 display:flex;
@@ -221,8 +239,6 @@ justify-content:center;
 gap:120px;
 margin-bottom:40px;
 }
-
-/* LINHA SEPARADORA */
 
 .home-divider{
 width:900px;
@@ -239,9 +255,8 @@ rgba(255,255,255,0)
 );
 }
 
-/* TEXTO DESCRIÇÃO */
-
 .home-description{
+
 background: linear-gradient(
 to right,
 rgba(0,0,0,0),
@@ -252,14 +267,20 @@ rgba(0,0,0,0)
 );
 
 padding:25px 60px;
+
 border-radius:10px;
+
 font-size:21px;
+
 line-height:1.7;
+
 backdrop-filter:blur(8px);
+
 margin-top:0;
+
 }
 
-/* ===== NOVO BLOCO PARA AVATAR ===== */
+/* USER AREA */
 
 .user-area{
 position:absolute;
@@ -290,26 +311,7 @@ color:white;
 font-weight:bold;
 }
 
-.logout-popup{
-position:absolute;
-top:36px;
-right:0;
-background:white;
-color:black;
-padding:6px 10px;
-border-radius:6px;
-font-size:13px;
-opacity:0;
-pointer-events:none;
-transition:0.2s;
-}
-
-.avatar:hover + .user-name + .logout-popup{
-opacity:1;
-pointer-events:auto;
-}
-
-/* BOTÃO LOGOUT - CANTO INFERIOR DIREITO */
+/* LOGOUT */
 
 .logout-button{
 
@@ -335,7 +337,85 @@ cursor:pointer;
 }
 
 .logout-button:hover{
-
 background:rgba(255,255,255,0.1);
+}
 
+/* TITULO AUSTRALIA */
+
+.country-title{
+
+position:absolute;
+
+left:50%;
+top:125px;
+
+transform:translateX(-50%);
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+color:white;
+
+font-weight:bold;
+
+}
+
+.country-help-text{
+font-size:28px;
+}
+
+/* CARDS DEV */
+
+.dev-card{
+opacity:0.45;
+cursor:default;
+filter:grayscale(40%);
+}
+
+.dev-card:hover{
+transform:none;
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+
+.dev-label{
+margin-top:8px;
+font-size:13px;
+color:rgba(255,255,255,0.7);
+text-align:center;
+}
+
+.country-large{
+padding:30px 38px;
+}
+
+.country-large img{
+width:180px;
+}
+
+.country-large p{
+font-size:22px;
+margin-top:14px;
+}
+
+.main-card{
+
+border:1px solid rgba(255,255,255,0.45);
+
+background:rgba(255,255,255,0.12);
+
+box-shadow:0 18px 40px rgba(0,0,0,0.35);
+
+}
+
+.main-card:hover{
+transform:translateY(-8px) scale(1.05);
+}
+
+.dev-wrapper{
+display:flex;
+flex-direction:column;
+align-items:center;
 }
