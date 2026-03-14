@@ -5,35 +5,44 @@
 <meta charset="UTF-8">
 <title>Re(start)</title>
 <link rel="stylesheet" href="../css/style.css">
+
+<!-- Biblioteca do Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body class="index">
 
 <div class="background"></div>
 
-<!-- BARRA SUPERIOR UNIFICADA -->
 <div class="topbar">
     <div class="logo">[ reStart ]</div>
-    <!-- usuário não aparece na index, então pode deixar vazio -->
 </div>
 
 <div class="login-container">
     <h2>Entrar</h2>
 
     <form id="loginForm">
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Senha" required>
+        <input id="email" type="email" placeholder="Email" required>
+        <input id="password" type="password" placeholder="Senha" required>
         <button type="submit">Entrar</button>
     </form>
 
+    <p id="errorMsg" style="color:red;"></p>
+
     <p class="register-link">
-        Não tem conta? <a href="#">Criar conta</a>
+        Não tem conta? <a href="register.html">Criar conta</a>
     </p>
 </div>
 
 <div class="page-transition"></div>
 
+<!-- seu arquivo supabase -->
+<script src="../js/supabase.js"></script>
+
 <script>
+
+// background animation
 const bg = document.querySelector(".background");
 
 document.addEventListener("mousemove", (e) => {
@@ -44,14 +53,35 @@ document.addEventListener("mousemove", (e) => {
     bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
 
 });
-</script>
 
-<script>
 
-const form = document.querySelector("form");
+// LOGIN
+
+const form = document.getElementById("loginForm");
 const transition = document.querySelector(".page-transition");
+const errorMsg = document.getElementById("errorMsg");
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+console.log("Tentando login...");
+
+const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+});
+
+if (error) {
+    console.error(error);
+    errorMsg.textContent = error.message;
+    return;
+}
+
+console.log("Login OK", data);
 
 transition.classList.add("active");
 document.body.classList.add("fade-out");
@@ -59,8 +89,6 @@ document.body.classList.add("fade-out");
 setTimeout(()=>{
 window.location.href="home.html";
 },600);
-
-e.preventDefault();
 
 });
 

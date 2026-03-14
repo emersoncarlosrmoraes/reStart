@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Re(start) - Home</title>
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body class="page-enter">
@@ -13,60 +14,114 @@
 
 <!-- NAVBAR -->
 <nav class="topbar">
-    <a href="home.html" class="logo">[ reStart ]</a>
 
-    <div class="user-name">
-        João Silva
-    </div>
+<a href="home.html" class="logo">[ reStart ]</a>
+
+<div class="home-slogan">
+Começar em um novo país é mais fácil quando alguém te ajuda no caminho.
+</div>
+
+<!-- AREA USUARIO -->
+<div class="user-area">
+
+<div class="avatar" id="avatar">?</div>
+
+<div class="user-name" id="userName">
+Carregando...
+</div>
+
+</div>
+
 </nav>
 
-<!-- SLOGAN -->
-<div class="home-slogan">
-    Começar em um novo país é mais fácil quando alguém te ajuda no caminho.
-</div>
+<!-- HERO -->
 
-<!-- HOME HERO -->
 <div class="home-hero">
 
-    <h2 class="home-title">
-        Escolha seu destino para começar
-    </h2>
+<h2 class="home-title">
+Escolha seu destino para começar
+</h2>
 
-    <div class="countries home-countries">
+<div class="countries home-countries">
 
-        <a href="australia.html" class="country-card">
-            <img src="https://flagcdn.com/w320/au.png">
-            <p>Austrália</p>
-        </a>
+<a href="australia.html" class="country-card">
+<img src="https://flagcdn.com/w320/au.png">
+<p>Austrália</p>
+</a>
 
-        <a href="ireland.html" class="country-card">
-            <img src="https://flagcdn.com/w320/ie.png">
-            <p>Irlanda</p>
-        </a>
-
-    </div>
-
-    <div class="home-divider"></div>
-
-    <div class="home-description">
-        O ReStart conecta brasileiros que já vivem no exterior com aqueles que estão iniciando sua jornada de imigração. 
-        Aqui você pode encontrar apoio, compartilhar experiências e acessar informações que ajudam a tornar o recomeço 
-        em um novo país mais tranquilo.
-    </div>
+<a href="ireland.html" class="country-card">
+<img src="https://flagcdn.com/w320/ie.png">
+<p>Irlanda</p>
+</a>
 
 </div>
 
+<div class="home-divider"></div>
+
+<div class="home-description">
+O ReStart conecta brasileiros que já vivem no exterior com aqueles que estão iniciando sua jornada de imigração.
+Aqui você pode encontrar apoio, compartilhar experiências e acessar informações que ajudam a tornar o recomeço
+em um novo país mais tranquilo.
+</div>
+
+</div>
+
+<!-- BOTÃO LOG OUT -->
+
+<div class="logout-button" id="logoutBtn">
+Log out
+</div>
+
+<script src="../js/supabase.js"></script>
+
 <script>
-const bg = document.querySelector(".background");
 
-document.addEventListener("mousemove", (e) => {
+/* background */
 
-    const x = (window.innerWidth / 2 - e.clientX) / 60;
-    const y = (window.innerHeight / 2 - e.clientY) / 60;
+const bg = document.querySelector(".background")
 
-    bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+document.addEventListener("mousemove",(e)=>{
 
-});
+const x=(window.innerWidth/2-e.clientX)/60
+const y=(window.innerHeight/2-e.clientY)/60
+
+bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
+
+})
+
+/* carregar usuário */
+
+async function loadUser(){
+
+const { data } = await supabase.auth.getUser()
+
+if(!data.user){
+window.location.href="index.html"
+return
+}
+
+const name = data.user.user_metadata.name || "Usuário"
+
+document.getElementById("userName").textContent = name
+
+const initial = name.charAt(0).toUpperCase()
+
+document.getElementById("avatar").textContent = initial
+
+}
+
+loadUser()
+
+/* logout */
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+
+await supabase.auth.signOut()
+
+window.location.href="index.html"
+
+})
+
 </script>
 
 </body>

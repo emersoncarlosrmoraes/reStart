@@ -53,6 +53,10 @@ body.index .background{
     cursor:pointer;
 }
 
+.topbar .logo:hover{
+background:rgba(255,255,255,0.1);
+}
+
 /* NOME DO USUÁRIO - canto direito */
 .user-name{
     position:absolute;
@@ -177,80 +181,6 @@ border:1px solid rgba(255,255,255,0.25);
     margin-top:10px;
     font-size:18px;
 }
-/* HOME CONTAINER - DUAS COLUNAS */
-.home-container{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:80%;
-    height:auto;
-    display:flex;
-    gap:60px; /* espaçamento entre colunas */
-    color:white;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* COLUNA ESQUERDA - TEXTO */
-.home-left{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px; /* maior */
-    line-height:1.8;
-    padding-right:30px; /* dá espaço para a linha vertical */
-    position:relative;
-}
-
-/* LINHA VERTICAL */
-.home-left::after{
-    content:"";
-    position:absolute;
-    right:0;
-    top:50%;
-    transform:translateY(-50%);
-    width:1px;
-    height:350px; /* altura da linha */
-    background:rgba(255,255,255,0.5);
-}
-
-/* COLUNA DIREITA - BANDEIRAS */
-.home-right{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-}
-
-/* TITULO “Para qual país você está indo?” */
-.home-right h2{
-    margin-bottom:40px; /* aumenta o espaçamento das bandeiras */
-    font-size:24px;
-}
-
-/* BANNERS DE PAÍSES */
-.home-right .countries{
-    display:flex;
-    gap:60px;
-}
-
-.home-right .country-card img{
-    width:140px;
-    border-radius:10px;
-    box-shadow:0px 8px 20px rgba(0,0,0,0.2);
-}
-
-.home-right .country-card:hover{
-    transform:scale(1.05);
-}
-
-.home-right .country-card p{
-    margin-top:10px;
-    font-size:18px;
-    color:white;
-}
 
 /* SLOGAN AO LADO DA LOGO */
 
@@ -329,66 +259,83 @@ backdrop-filter:blur(8px);
 margin-top:0;
 }
 
-/* INDICADOR DE PAÍS AO LADO DA LOGO */
+/* ===== NOVO BLOCO PARA AVATAR ===== */
 
-.country-indicator{
+.user-area{
 position:absolute;
-top:21px;
-left:145px;
-
+top:11px;
+right:15px;
 display:flex;
 align-items:center;
 gap:8px;
+}
 
-color:white;
+.avatar{
+width:30px;
+height:30px;
+border-radius:50%;
+background:white;
+color:black;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
 font-size:14px;
-font-weight:500;
+cursor:pointer;
 }
 
-.country-indicator img{
-width:45px;
-border-radius:2px;
+.user-area .user-name{
+position:static;
+color:white;
+font-weight:bold;
 }
 
-/* TRANSIÇÃO DE ENTRADA NO SISTEMA */
-
-body.fade-out{
-opacity:0;
-transition:opacity 0.6s ease;
-}
-
-/* overlay escuro suave */
-
-.page-transition{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
+.logout-popup{
+position:absolute;
+top:36px;
+right:0;
+background:white;
+color:black;
+padding:6px 10px;
+border-radius:6px;
+font-size:13px;
 opacity:0;
 pointer-events:none;
-transition:opacity 0.6s ease;
-z-index:999;
+transition:0.2s;
 }
 
-.page-transition.active{
-opacity:0.35;
-}
-
-/* FADE IN DAS PÁGINAS APÓS LOGIN */
-
-body.page-enter{
-opacity:0;
-animation:pageFadeIn 0.8s ease forwards;
-}
-
-@keyframes pageFadeIn{
-from{
-opacity:0;
-}
-
-to{
+.avatar:hover + .user-name + .logout-popup{
 opacity:1;
+pointer-events:auto;
 }
+
+/* BOTÃO LOGOUT - CANTO INFERIOR DIREITO */
+
+.logout-button{
+
+position:fixed;
+bottom:20px;
+right:20px;
+
+color:white;
+
+border:0.5px solid rgba(255,255,255,0.5);
+
+font-size:16px;
+font-weight:bold;
+
+padding:6px 14px;
+
+border-radius:4px;
+
+letter-spacing:1px;
+
+cursor:pointer;
+
+}
+
+.logout-button:hover{
+
+background:rgba(255,255,255,0.1);
+
 }
