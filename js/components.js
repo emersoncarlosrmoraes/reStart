@@ -9,8 +9,8 @@ document.getElementById(id).innerHTML = html
 
 async function loadLayout(){
 
-await loadComponent("navbar","../frontend/components/navbar.html")
-await loadComponent("sidebar","../frontend/components/sidebar.html")
+await loadComponent("navbar","/frontend/components/navbar.html")
+await loadComponent("sidebar","/frontend/components/sidebar.html")
 
 setupSidebar()
 setupLogout()
