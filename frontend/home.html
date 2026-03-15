@@ -2,44 +2,33 @@
 <html lang="pt-BR">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Re(start) - Home</title>
+
 <link rel="stylesheet" href="../css/style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body class="page-enter">
 
 <div class="background"></div>
 
-<!-- NAVBAR -->
-<nav class="topbar">
+<!-- SIDEBAR COMPONENT -->
+<div id="sidebar"></div>
 
-<a href="home.html" class="logo">[ reStart ]</a>
-
-<div class="home-slogan">
-Começar em um novo país é mais fácil quando alguém te ajuda no caminho.
-</div>
-
-<!-- AREA USUARIO -->
-<div class="user-area">
-
-<div class="avatar" id="avatar">?</div>
-
-<div class="user-name" id="userName">
-Carregando...
-</div>
-
-</div>
-
-</nav>
+<!-- NAVBAR COMPONENT -->
+<div id="navbar"></div>
 
 <!-- HERO -->
 
 <div class="home-hero">
 
 <h2 class="home-title">
-Escolha seu destino para começar
+Escolha seu destino
+<span class="home-subtitle">para começar</span>
 </h2>
 
 <div class="countries home-countries">
@@ -59,20 +48,18 @@ Escolha seu destino para começar
 <div class="home-divider"></div>
 
 <div class="home-description">
+
 O ReStart conecta brasileiros que já vivem no exterior com aqueles que estão iniciando sua jornada de imigração.
+
 Aqui você pode encontrar apoio, compartilhar experiências e acessar informações que ajudam a tornar o recomeço
 em um novo país mais tranquilo.
-</div>
 
 </div>
 
-<!-- BOTÃO LOG OUT -->
-
-<div class="logout-button" id="logoutBtn">
-Log out
 </div>
 
 <script src="../js/supabase.js"></script>
+<script src="../js/components.js"></script>
 
 <script>
 
@@ -110,17 +97,7 @@ document.getElementById("avatar").textContent = initial
 
 }
 
-loadUser()
-
-/* logout */
-
-document.getElementById("logoutBtn").addEventListener("click",async()=>{
-
-await supabase.auth.signOut()
-
-window.location.href="index.html"
-
-})
+setTimeout(loadUser,300)
 
 </script>
 
