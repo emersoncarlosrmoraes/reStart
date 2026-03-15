@@ -3,57 +3,154 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Re(start) - Austrália | Quero Ajudar</title>
+<title>Re(start) - Austrália</title>
 
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
-<body>
+<body class="page-enter">
 
 <div class="background"></div>
 
-<nav class="topbar">
+<!-- SIDEBAR COMPONENT -->
+<div id="sidebar"></div>
 
-<a href="home.html" class="logo">[ reStart ]</a>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<div class="user-name">João Silva</div>
+<!-- NAVBAR COMPONENT -->
+<div id="navbar"></div>
 
-</nav>
 
 <div class="country-container">
 
-<h2>Austrália — Quero Ajudar</h2>
+<div class="country-help-text">
+Com o que você pode ajudar?
+</div>
 
 <div class="countries">
 
-<a href="features/australia-housing-form.html" class="country-card">
+<div class="dev-wrapper">
 
-<img src="https://cdn-icons-png.flaticon.com/512/619/619034.png">
+<a href="features/australia-housing-form.html" class="country-card country-large main-card">
+
+<img src="images/house.png">
 
 <p>Moradia</p>
 
 </a>
 
-<a href="#" class="country-card">
+</div>
 
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+
+<div class="dev-wrapper">
+
+<div class="country-card country-large dev-card">
+
+<img src="images/job.png">
 
 <p>Trabalho</p>
 
-</a>
+</div>
 
-<a href="#" class="country-card">
+<div class="dev-label">
+Em desenvolvimento
+</div>
 
-<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+</div>
+
+
+<div class="dev-wrapper">
+
+<div class="country-card country-large dev-card">
+
+<img src="images/documents.png">
 
 <p>Documentação</p>
 
-</a>
+</div>
+
+<div class="dev-label">
+Em desenvolvimento
+</div>
+
+</div>
+
+
+<div class="dev-wrapper">
+
+<div class="country-card country-large dev-card">
+
+<img src="images/mobility.png">
+
+<p>Mobilidade</p>
+
+</div>
+
+<div class="dev-label">
+Em desenvolvimento
+</div>
+
+</div>
 
 </div>
 
 </div>
+
+
+<script src="../js/supabase.js"></script>
+<script src="../js/components.js"></script>
+
+<script>
+
+const bg = document.querySelector(".background")
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(window.innerWidth/2-e.clientX)/60
+const y=(window.innerHeight/2-e.clientY)/60
+
+bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
+
+})
+
+async function loadUser(){
+
+const { data } = await supabase.auth.getUser()
+
+if(!data.user){
+
+window.location.href="index.html"
+return
+
+}
+
+const name = data.user.user_metadata.name || "Usuário"
+
+document.getElementById("userName").textContent = name
+
+const initial = name.charAt(0).toUpperCase()
+
+document.getElementById("avatar").textContent = initial
+
+}
+
+loadUser()
+
+/* slogan */
+
+setTimeout(()=>{
+
+const slogan = document.querySelector(".home-slogan")
+
+if(slogan){
+slogan.textContent = "Austrália/Oferecer ajuda"
+}
+
+},200)
+
+</script>
 
 </body>
 </html>

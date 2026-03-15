@@ -10,37 +10,24 @@
 
 </head>
 
-<body>
+<body class="page-enter">
 
 <div class="background"></div>
 
-<nav class="topbar">
+<!-- SIDEBAR COMPONENT -->
+<div id="sidebar"></div>
 
-<a href="home.html" class="logo">[ reStart ]</a>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<img class="country-flag" src="https://flagcdn.com/w40/au.png">
+<!-- NAVBAR COMPONENT -->
+<div id="navbar"></div>
 
-<div class="country-title">
+
+<div class="country-container">
 
 <div class="country-help-text">
 Com o que você precisa de ajuda?
 </div>
-
-</div>
-
-<div class="user-area">
-
-<div class="avatar" id="avatar">?</div>
-
-<div class="user-name" id="userName">
-Carregando...
-</div>
-
-</div>
-
-</nav>
-
-<div class="country-container">
 
 <div class="countries">
 
@@ -48,7 +35,7 @@ Carregando...
 
 <a href="features/australia-housing-list.html" class="country-card country-large main-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/619/619034.png">
+<img src="images/house.png">
 
 <p>Moradia</p>
 
@@ -56,11 +43,12 @@ Carregando...
 
 </div>
 
+
 <div class="dev-wrapper">
 
 <div class="country-card country-large dev-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+<img src="images/job.png">
 
 <p>Trabalho</p>
 
@@ -72,11 +60,12 @@ Em desenvolvimento
 
 </div>
 
+
 <div class="dev-wrapper">
 
 <div class="country-card country-large dev-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+<img src="images/documents.png">
 
 <p>Documentação</p>
 
@@ -88,11 +77,12 @@ Em desenvolvimento
 
 </div>
 
+
 <div class="dev-wrapper">
 
 <div class="country-card country-large dev-card">
 
-<img src="https://cdn-icons-png.flaticon.com/512/743/743922.png">
+<img src="images/mobility.png">
 
 <p>Mobilidade</p>
 
@@ -108,11 +98,9 @@ Em desenvolvimento
 
 </div>
 
-<div class="logout-button" id="logoutBtn">
-Log out
-</div>
 
 <script src="../js/supabase.js"></script>
+<script src="../js/components.js"></script>
 
 <script>
 
@@ -150,13 +138,17 @@ document.getElementById("avatar").textContent = initial
 
 loadUser()
 
-document.getElementById("logoutBtn").addEventListener("click",async()=>{
+/* slogan */
 
-await supabase.auth.signOut()
+setTimeout(()=>{
 
-window.location.href="index.html"
+const slogan = document.querySelector(".home-slogan")
 
-})
+if(slogan){
+slogan.textContent = "Austrália / Buscar ajuda"
+}
+
+},200)
 
 </script>
 

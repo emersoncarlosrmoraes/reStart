@@ -2,68 +2,64 @@
 <html lang="pt-BR">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Re(start) - Austrália</title>
 
 <link rel="stylesheet" href="../css/style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
 
-<body>
+<body class="page-enter">
 
 <div class="background"></div>
 
-<nav class="topbar">
+<!-- SIDEBAR COMPONENT -->
+<div id="sidebar"></div>
 
-<a href="home.html" class="logo">[ reStart ]</a>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<img class="country-flag" src="https://flagcdn.com/w40/au.png">
+<!-- NAVBAR COMPONENT -->
+<div id="navbar"></div>
 
-<!-- AREA USUARIO -->
-<div class="user-area">
+<!-- CONTEÚDO DA PÁGINA -->
 
-<div class="avatar" id="avatar">?</div>
+<div class="country-page">
 
-<div class="user-name" id="userName">
-Carregando...
-</div>
+<a href="australia-help.html" class="country-option">
 
-</div>
+<img src="images/search.png" class="country-page-flag">
 
-</nav>
+<h2>Buscar ajuda</h2>
 
-<div class="country-container">
-
-<div class="countries">
-
-<a href="australia-help.html" class="country-card">
-
-<img src="images/help-icon-1.svg">
-
-<p>Buscar ajuda</p>
+<p>
+Encontre brasileiros que já vivem na Austrália e podem ajudar
+com informações, dicas e apoio no seu recomeço
+</p>
 
 </a>
 
 
-<a href="australia-offer.html" class="country-card">
+<a href="australia-offer.html" class="country-option">
 
-<img src="images/helping-icon-1.svg">
+<img src="images/help.png" class="country-page-flag">
 
-<p>Oferecer ajuda</p>
+<h2>Oferecer ajuda</h2>
+
+<p>
+Ajude quem está chegando na Austrália compartilhando sua
+experiência e oferecendo orientação
+</p>
 
 </a>
 
 </div>
 
-</div>
-
-<!-- BOTÃO LOGOUT -->
-<div class="logout-button" id="logoutBtn">
-Log out
-</div>
 
 <script src="../js/supabase.js"></script>
+<script src="../js/components.js"></script>
 
 <script>
 
@@ -105,15 +101,15 @@ document.getElementById("avatar").textContent = initial
 
 loadUser()
 
-/* logout */
+setTimeout(()=>{
 
-document.getElementById("logoutBtn").addEventListener("click",async()=>{
+const slogan = document.querySelector(".home-slogan")
 
-await supabase.auth.signOut()
+if(slogan){
+slogan.textContent = "Austrália"
+}
 
-window.location.href="index.html"
-
-})
+},200)
 
 </script>
 
