@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Irlanda - Cadastrar Moradia</title>
+<title>Formulário de cadastro</title>
 <link rel="stylesheet" href="../../css/style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -17,37 +17,54 @@
 <div id="navbar"></div>
 
 <div class="country-container">
-<h2>Irlanda — Quero Ajudar</h2>
+    <h2>Formulário de cadastro</h2>
 
-<form class="login-box" id="housingFormIE" enctype="multipart/form-data">
+    <form id="housingFormIR" class="form-left" enctype="multipart/form-data">
 
-    <label>Foto da Moradia</label>
-    <input type="file" id="photo" accept="image/*" required>
+        <div class="form-row">
+            <div class="form-field photo-field">
+                <label>Foto da Moradia</label>
+                <input type="file" id="photo" accept="image/*" required>
+            </div>
 
-    <label>Tipo de Moradia</label>
-    <select id="type" required>
-        <option value="">Selecione...</option>
-        <option value="Casa">Casa</option>
-        <option value="Apartamento">Apartamento</option>
-        <option value="Quarto Compartilhado">Quarto Compartilhado</option>
-        <option value="Estúdio">Estúdio</option>
-    </select>
+            <div class="form-field">
+                <label>Tipo de Moradia</label>
+                <select id="type" required>
+                    <option value="">Selecione...</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Apartamento">Apartamento</option>
+                    <option value="Quarto Compartilhado">Quarto Compartilhado</option>
+                    <option value="Estúdio">Estúdio</option>
+                </select>
+            </div>
+        </div>
 
-    <label>Cidade</label>
-    <input type="text" id="city" placeholder="Cidade" required>
+        <div class="form-row">
+            <div class="form-field">
+                <label>Cidade</label>
+                <input type="text" id="city" placeholder="Cidade" required>
+            </div>
 
-    <label>Preço / Aluguel</label>
-    <input type="number" id="price" placeholder="Ex: 300" required>
+            <div class="form-field small-field">
+                <label>Preço do aluguel (€)</label>
+                <input type="number" id="price" placeholder="Ex: 300" required>
+            </div>
 
-    <label>Disponibilidade</label>
-    <input type="date" id="available_from" required>
+            <div class="form-field small-field">
+                <label>Disponibilidade</label>
+                <input type="date" id="available_from" required>
+            </div>
+        </div>
 
-    <label>Contato (Email ou Telefone)</label>
-    <input type="text" id="contact" placeholder="Email ou Telefone" required>
+        <div class="form-row">
+            <div class="form-field full-width">
+                <label>Contato para mais informações (Email ou Telefone)</label>
+                <input type="text" id="contact" placeholder="Email ou Telefone" required>
+            </div>
+        </div>
 
-    <button type="submit">Cadastrar</button>
-</form>
-
+        <button type="submit" class="btn-submit">Cadastrar</button>
+    </form>
 </div>
 
 <script src="../../js/supabase.js"></script>
@@ -71,8 +88,16 @@ async function loadUser(){
 }
 loadUser();
 
+/* slogan */
+setTimeout(()=>{
+    const slogan = document.querySelector(".home-slogan");
+    if(slogan){
+        slogan.textContent = "Irlanda / Oferecer ajuda / Cadastrar moradia";
+    }
+},200);
+
 /* FORMULÁRIO */
-document.getElementById("housingFormIE").addEventListener("submit", async function(e){
+document.getElementById("housingFormIR").addEventListener("submit", async function(e){
     e.preventDefault();
 
     const city = document.getElementById("city").value;
@@ -87,7 +112,6 @@ document.getElementById("housingFormIE").addEventListener("submit", async functi
         return;
     }
 
-    // Upload da foto para Supabase Storage
     const fileName = `${Date.now()}_${photoFile.name}`;
     const { data: photoData, error: photoError } = await supabase
         .storage
@@ -101,11 +125,11 @@ document.getElementById("housingFormIE").addEventListener("submit", async functi
 
     const photo_url = supabase.storage.from('housing-photos').getPublicUrl(fileName).data.publicUrl;
 
-    // Inserir dados na tabela 'properties' com country = 'Ireland'
+    // Inserir dados na tabela 'moradia'
     const { data, error } = await supabase
-        .from('properties')
+        .from('moradia')
         .insert([{
-            country: 'Ireland',
+            country: 'Ireland',  // define o país Irlanda
             type,
             city,
             price,
@@ -120,6 +144,11 @@ document.getElementById("housingFormIE").addEventListener("submit", async functi
     }
 
     alert("Moradia cadastrada na Irlanda!");
+
+    const btn = this.querySelector(".btn-submit");
+    btn.style.background = "rgba(255,255,255,0.4)";
+    setTimeout(()=>btn.style.background = "rgba(255,255,255,0.15)", 200);
+
     this.reset();
 });
 </script>

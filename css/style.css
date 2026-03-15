@@ -854,3 +854,106 @@ opacity:0.85;
 line-height:1.4;
 
 }
+
+/* FORMULÁRIO MODERNO - ALINHADO À ESQUERDA */
+.form-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(20, 20, 25, 0.70); /* fundo da caixa mais escuro e transparente */
+    padding: 50px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    width: 1200px;        /* largura fixa */
+    min-height: 550px;    /* altura mínima */
+    margin-left: 50px;    /* distância da borda esquerda */
+    gap: 30px;            /* espaço entre linhas do formulário */
+    border: 1px solid rgba(255,255,255,0.2); /* borda branca leve */
+}
+
+/* LINHAS DO FORMULÁRIO */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;           /* espaçamento entre campos */
+    width: 100%;
+}
+
+/* CAMPOS INDIVIDUAIS */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;                  /* ocupa espaço restante da linha */
+    min-width: 200px;         /* largura mínima maior */
+    align-items: flex-start;  /* label alinhado à esquerda */
+}
+
+.form-field.full-width {
+    flex: 1 1 100%;
+}
+
+.form-field.small-field {
+    flex: 0 0 200px;          /* campo pequeno maior */
+}
+
+.form-field.photo-field {
+    flex: 2;                  /* campo de foto maior */
+}
+
+/* LABELS */
+.form-left label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: white;
+    align-self: flex-start;    /* label alinhada à esquerda */
+}
+
+/* INPUT E SELECT - TODOS ESCUROS TRANSPARENTES */
+.form-left input,
+.form-left select {
+    padding: 14px 16px;        
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: rgba(69, 69, 83, 0.5); /* mesma cor para todos os campos */
+    color: white;
+    font-size: 16px;           
+    width: 100%;                /* ocupa toda largura do field */
+}
+
+/* PLACEHOLDER */
+.form-left input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* SELECT - agora com mesma cor que os outros campos */
+.form-left select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(69, 69, 83, 0.5); /* mesma cor que os inputs */
+    color: white;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* BOTÃO - menor, ajustado ao texto, alinhado à direita, totalmente arredondado */
+.btn-submit {
+    padding: 8px 16px;          /* altura levemente maior, largura mínima ajustada */
+    border-radius: 999px;       /* cantos totalmente arredondados */
+    border: none;
+    background: rgba(255,255,255,0.3); /* fundo mais claro */
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 10px;
+    align-self: flex-end;       /* alinha à direita do formulário */
+    font-size: 14px;
+    width: auto;                /* largura ajusta-se ao conteúdo */
+    min-width: 80px;            /* garante um mínimo confortável */
+}
+
+.btn-submit:hover {
+    background: rgba(255,255,255,1);  /* fundo completamente branco */
+    color: #000000;                   /* texto preto no hover */
+}
