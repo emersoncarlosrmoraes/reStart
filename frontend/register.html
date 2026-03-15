@@ -6,7 +6,7 @@
 <title>Re(start) - Cadastro</title>
 <link rel="stylesheet" href="../css/style.css">
 
-<!-- biblioteca do supabase -->
+<!-- Biblioteca do Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head>
@@ -15,101 +15,80 @@
 
 <div class="background"></div>
 
-<!-- BARRA SUPERIOR UNIFICADA -->
-<div class="topbar">
-    <div class="logo">[ reStart ]</div>
+<!-- TOPBAR -->
+<div class="nav-left">
+    <!-- Logo usando mesma classe das páginas logadas -->
+    <div class="logo">
+        <img src="images/logo.png" alt="Logo reStart" class="logo-img">
+    </div>
 </div>
 
 <div class="login-container">
     <h2>Criar Conta</h2>
 
-<form id="registerForm">
+    <form id="registerForm">
+        <input id="name" type="text" placeholder="Nome" required>
+        <input id="email" type="email" placeholder="Email" required>
+        <input id="password" type="password" placeholder="Senha" required>
+        <input id="confirmPassword" type="password" placeholder="Confirmar Senha" required>
+        <button type="submit">Cadastrar</button>
+    </form>
 
-    <input id="name" type="text" placeholder="Nome" required>
+    <p id="errorMsg" style="color:red;"></p>
 
-    <input id="email" type="email" placeholder="Email" required>
-
-    <input id="password" type="password" placeholder="Senha" required>
-
-    <input id="confirmPassword" type="password" placeholder="Confirmar Senha" required>
-
-    <button type="submit">Cadastrar</button>
-
-</form>
-
-<p id="errorMsg" style="color:red;"></p>
-
-<p class="register-link">
-    Já tem conta? <a href="index.html">Entrar</a>
-</p>
-
+    <p class="register-link">
+        Já tem conta? <a href="index.html">Entrar</a>
+    </p>
 </div>
 
 <div class="page-transition"></div>
 
-<!-- seu supabase.js -->
 <script src="../js/supabase.js"></script>
 
 <script>
-
-// efeito background
+// background animation
 const bg = document.querySelector(".background");
-
 document.addEventListener("mousemove", (e) => {
-
     const x = (window.innerWidth / 2 - e.clientX) / 60;
     const y = (window.innerHeight / 2 - e.clientY) / 60;
-
     bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
-
 });
 
-
 // CADASTRO
-
 const form = document.getElementById("registerForm");
 const transition = document.querySelector(".page-transition");
 const errorMsg = document.getElementById("errorMsg");
 
 form.addEventListener("submit", async function(e){
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-e.preventDefault();
-
-const name = document.getElementById("name").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-const confirmPassword = document.getElementById("confirmPassword").value;
-
-if(password !== confirmPassword){
-    errorMsg.textContent = "As senhas não coincidem";
-    return;
-}
-
-const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-        data: {
-            name: name
-        }
+    if(password !== confirmPassword){
+        errorMsg.textContent = "As senhas não coincidem";
+        return;
     }
+
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: { data: { name: name } }
+    });
+
+    if(error){
+        errorMsg.textContent = error.message;
+        return;
+    }
+
+    transition.classList.add("active");
+    document.body.classList.add("fade-out");
+
+    setTimeout(()=>{
+        window.location.href="index.html";
+    },600);
 });
-
-if(error){
-    console.error(error);
-    errorMsg.textContent = error.message;
-    return;
-}
-
-transition.classList.add("active");
-document.body.classList.add("fade-out");
-
-setTimeout(()=>{
-window.location.href="index.html";
-},600);
-
-});
-
 </script>
 
 </body>

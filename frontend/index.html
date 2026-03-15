@@ -15,8 +15,12 @@
 
 <div class="background"></div>
 
-<div class="topbar">
-    <div class="logo">[ reStart ]</div>
+<!-- TOPBAR -->
+<div class="nav-left">
+    <!-- Logo usando mesma classe das páginas logadas -->
+    <div class="logo">
+        <img src="images/logo.png" alt="Logo reStart" class="logo-img">
+    </div>
 </div>
 
 <div class="login-container">
@@ -37,61 +41,44 @@
 
 <div class="page-transition"></div>
 
-<!-- seu arquivo supabase -->
 <script src="../js/supabase.js"></script>
 
 <script>
-
 // background animation
 const bg = document.querySelector(".background");
-
 document.addEventListener("mousemove", (e) => {
-
     const x = (window.innerWidth / 2 - e.clientX) / 60;
     const y = (window.innerHeight / 2 - e.clientY) / 60;
-
     bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
-
 });
 
-
 // LOGIN
-
 const form = document.getElementById("loginForm");
 const transition = document.querySelector(".page-transition");
 const errorMsg = document.getElementById("errorMsg");
 
 form.addEventListener("submit", async function(e){
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-e.preventDefault();
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+    if (error) {
+        errorMsg.textContent = error.message;
+        return;
+    }
 
-console.log("Tentando login...");
+    transition.classList.add("active");
+    document.body.classList.add("fade-out");
 
-const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
+    setTimeout(()=>{
+        window.location.href="home.html";
+    },600);
 });
-
-if (error) {
-    console.error(error);
-    errorMsg.textContent = error.message;
-    return;
-}
-
-console.log("Login OK", data);
-
-transition.classList.add("active");
-document.body.classList.add("fade-out");
-
-setTimeout(()=>{
-window.location.href="home.html";
-},600);
-
-});
-
 </script>
 
 </body>
