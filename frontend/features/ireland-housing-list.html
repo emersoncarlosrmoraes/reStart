@@ -3,63 +3,53 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Irlanda - Moradias Disponíveis</title>
-
+<title>Visualizar Moradias - Irlanda</title>
 <link rel="stylesheet" href="../../css/style.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body class="page-enter">
 
 <div class="background"></div>
 
-<!-- SIDEBAR COMPONENT -->
 <div id="sidebar"></div>
-
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- NAVBAR COMPONENT -->
-<div id="navbar"></div>
-
+<div id="navbar">
+<div class="navbar-user">
+<div id="avatar" class="user-avatar">C</div>
+<span id="userName">Carregando...</span>
+</div>
+</div>
 
 <div class="country-container">
 
-<h2>Irlanda — Preciso de Ajuda</h2>
+<div class="ireland-carousel-wrapper">
 
-<div class="countries">
+<button class="carousel-btn carousel-left" id="scrollLeft">&#10094;</button>
 
-<div class="country-card">
+<div class="ireland-carousel-viewport">
 
-<p><b>Quarto disponível</b></p>
-<p>Dublin</p>
-<p>1 mês gratuito</p>
-
-</div>
-
-
-<div class="country-card">
-
-<p><b>Sofá disponível</b></p>
-<p>Cork</p>
-<p>2 semanas</p>
-
+<div id="irelandCardsContainer" class="ireland-cards-container">
 </div>
 
 </div>
 
+<button class="carousel-btn carousel-right" id="scrollRight">&#10095;</button>
+
 </div>
 
+</div>
 
 <script src="../../js/supabase.js"></script>
 <script src="../../js/components.js"></script>
+<script src="../../js/app.js"></script>
 
 <script>
 
-/* background movimento */
+/* Background movimento */
 
-const bg = document.querySelector(".background")
+const bg=document.querySelector(".background")
 
 document.addEventListener("mousemove",(e)=>{
 
@@ -70,8 +60,7 @@ bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
 
 })
 
-
-/* carregar usuário */
+/* Carregar usuário */
 
 async function loadUser(){
 
@@ -84,30 +73,121 @@ return
 
 }
 
-const name = data.user.user_metadata.name || "Usuário"
+const name=data.user.user_metadata.name||"Usuário"
 
-document.getElementById("userName").textContent = name
-
-const initial = name.charAt(0).toUpperCase()
-
-document.getElementById("avatar").textContent = initial
+document.getElementById("userName").textContent=name
+document.getElementById("avatar").textContent=name.charAt(0).toUpperCase()
 
 }
 
 loadUser()
 
-
 /* slogan */
 
 setTimeout(()=>{
 
-const slogan = document.querySelector(".home-slogan")
+const slogan=document.querySelector(".home-slogan")
 
 if(slogan){
-slogan.textContent = "Irlanda / Buscar ajuda / Moradias"
+slogan.textContent="Irlanda / Oferecer ajuda / Lista de moradias"
 }
 
 },200)
+
+
+
+/* =====================
+   CARREGAR MORADIAS
+===================== */
+
+async function loadIrelandHousing(){
+
+try{
+
+const { data,error }=await supabase
+.from('moradia')
+.select('*')
+.eq('country','Ireland')
+.order('created_at',{ascending:false})
+
+if(error) throw error
+
+const container=document.getElementById("irelandCardsContainer")
+
+container.innerHTML=""
+
+if(data.length===0){
+
+container.innerHTML="<p>Nenhuma moradia cadastrada ainda.</p>"
+return
+
+}
+
+data.forEach(item=>{
+
+let availableDate=item.available_from?new Date(item.available_from):null
+
+let availableStr=availableDate
+?`${("0"+availableDate.getDate()).slice(-2)}/${("0"+(availableDate.getMonth()+1)).slice(-2)}/${availableDate.getFullYear()}`
+:"-"
+
+const card=document.createElement("div")
+
+card.className="ireland-card"
+
+card.innerHTML=`
+
+<img src="${item.photo_url || 'https://via.placeholder.com/300x180?text=Sem+Foto'}">
+
+<h3>${item.type} em ${item.city}</h3>
+
+<p><strong>Preço:</strong> € ${item.price}</p>
+
+<p><strong>Disponível:</strong> ${availableStr}</p>
+
+<p><strong>@</strong> ${item.contact}</p>
+
+`
+
+container.appendChild(card)
+
+})
+
+}catch(err){
+
+console.error("Erro ao carregar moradias:",err.message)
+
+}
+
+}
+
+loadIrelandHousing()
+
+
+
+/* =====================
+   SETAS DO CARROSSEL
+===================== */
+
+const container=document.getElementById("irelandCardsContainer")
+
+document.getElementById("scrollRight").onclick=()=>{
+
+container.scrollBy({
+left:320,
+behavior:"smooth"
+})
+
+}
+
+document.getElementById("scrollLeft").onclick=()=>{
+
+container.scrollBy({
+left:-320,
+behavior:"smooth"
+})
+
+}
 
 </script>
 
