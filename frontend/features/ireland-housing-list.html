@@ -2,10 +2,14 @@
 <html lang="pt-BR">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Visualizar Moradias - Irlanda</title>
+
 <link rel="stylesheet" href="../../css/style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 
 <body class="page-enter">
@@ -16,30 +20,24 @@
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <div id="navbar">
+
 <div class="navbar-user">
 <div id="avatar" class="user-avatar">C</div>
 <span id="userName">Carregando...</span>
 </div>
+
 </div>
 
 <div class="country-container">
 
-<div class="ireland-carousel-wrapper">
+<div class="ireland-cards-wrapper">
 
-<button class="carousel-btn carousel-left" id="scrollLeft">&#10094;</button>
-
-<div class="ireland-carousel-viewport">
-
-<div id="irelandCardsContainer" class="ireland-cards-container">
-</div>
-
-</div>
-
-<button class="carousel-btn carousel-right" id="scrollRight">&#10095;</button>
+<div id="irelandCardsContainer" class="ireland-cards-container"></div>
 
 </div>
 
 </div>
+
 
 <script src="../../js/supabase.js"></script>
 <script src="../../js/components.js"></script>
@@ -47,9 +45,9 @@
 
 <script>
 
-/* Background movimento */
+/* BACKGROUND MOVIMENTO */
 
-const bg=document.querySelector(".background")
+const bg = document.querySelector(".background")
 
 document.addEventListener("mousemove",(e)=>{
 
@@ -60,7 +58,8 @@ bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
 
 })
 
-/* Carregar usuário */
+
+/* CARREGAR USUÁRIO */
 
 async function loadUser(){
 
@@ -82,7 +81,8 @@ document.getElementById("avatar").textContent=name.charAt(0).toUpperCase()
 
 loadUser()
 
-/* slogan */
+
+/* SLOGAN */
 
 setTimeout(()=>{
 
@@ -118,7 +118,7 @@ container.innerHTML=""
 
 if(data.length===0){
 
-container.innerHTML="<p>Nenhuma moradia cadastrada ainda.</p>"
+container.innerHTML="<p style='color:white'>Nenhuma moradia cadastrada ainda.</p>"
 return
 
 }
@@ -145,7 +145,7 @@ card.innerHTML=`
 
 <p><strong>Disponível:</strong> ${availableStr}</p>
 
-<p><strong>@</strong> ${item.contact}</p>
+<p><strong></strong> ${item.contact}</p>
 
 `
 
@@ -162,32 +162,6 @@ console.error("Erro ao carregar moradias:",err.message)
 }
 
 loadIrelandHousing()
-
-
-
-/* =====================
-   SETAS DO CARROSSEL
-===================== */
-
-const container=document.getElementById("irelandCardsContainer")
-
-document.getElementById("scrollRight").onclick=()=>{
-
-container.scrollBy({
-left:320,
-behavior:"smooth"
-})
-
-}
-
-document.getElementById("scrollLeft").onclick=()=>{
-
-container.scrollBy({
-left:-320,
-behavior:"smooth"
-})
-
-}
 
 </script>
 

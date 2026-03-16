@@ -957,31 +957,39 @@ line-height:1.4;
     background: rgba(255,255,255,1);  /* fundo completamente branco */
     color: #000000;                   /* texto preto no hover */
 }
+
 /* =========================
    IRELAND HOUSING LAYOUT
 ========================= */
 
-.ireland-cards-container{
-
-display:grid !important;
-
-grid-template-columns:repeat(5, minmax(0,1fr));
-
-gap:20px;
+.ireland-cards-wrapper{
 
 width:100%;
-
+margin-left:10px;
 margin-top:40px;
 
 }
 
+/* GRID 5 COLUNAS FIXAS */
+
+.ireland-cards-container{
+
+display:grid;
+
+grid-template-columns:repeat(5, 250px);
+
+gap:20px; /* mantém distância entre os cards */
+
+}
+
 /* =====================
-   CARD
+   CARD QUADRADO
 ===================== */
 
 .ireland-card{
 
-width:100%;
+width:250px;
+height:250px;
 
 background:rgba(255,255,255,0.25);
 
@@ -995,25 +1003,34 @@ border:1px solid rgba(255,255,255,0.5);
 
 box-shadow:0 6px 15px rgba(0,0,0,0.1);
 
+display:flex;
+flex-direction:column;
+
+overflow:hidden;
+
 }
 
-/* FOTO */
+/* =====================
+   IMAGEM
+===================== */
 
 .ireland-card img{
 
 width:100%;
 
-height:110px;
+height:150px;
 
 object-fit:cover;
 
 border-radius:8px;
 
-margin-bottom:8px;
+flex-shrink:0;
 
 }
 
-/* TITULO */
+/* =====================
+   TITULO
+===================== */
 
 .ireland-card h3{
 
@@ -1023,11 +1040,19 @@ font-weight:600;
 
 color:white;
 
-margin-bottom:6px;
+margin:6px 0 4px 0;
+
+line-height:1.2;
+
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
 
 }
 
-/* TEXTOS */
+/* =====================
+   TEXTOS
+===================== */
 
 .ireland-card p{
 
@@ -1035,17 +1060,21 @@ font-size:12px;
 
 color:white;
 
-margin:3px 0;
+margin:2px 0;
 
-display:flex;
+line-height:1.2;
+
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
 
 }
 
-/* LABEL */
+/* =====================
+   LABEL
+===================== */
 
 .ireland-card p strong{
-
-width:75px;
 
 margin-right:4px;
 
