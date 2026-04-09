@@ -1,68 +1,50 @@
-async function loadComponent(id,file){
+async function loadComponent(id, file) {
+  const res = await fetch(file);
+  const html = await res.text();
 
-const res = await fetch(file)
-const html = await res.text()
-
-document.getElementById(id).innerHTML = html
-
+  document.getElementById(id).innerHTML = html;
 }
 
-async function loadLayout(){
+async function loadLayout() {
+  await loadComponent("navbar", "/frontend/components/navbar.html");
+  await loadComponent("sidebar", "/frontend/components/sidebar.html");
 
-await loadComponent("navbar","/frontend/components/navbar.html")
-await loadComponent("sidebar","/frontend/components/sidebar.html")
-
-setupSidebar()
-setupLogout()
-
+  setupSidebar();
+  setupLogout();
 }
 
 /* SIDEBAR */
 
-function setupSidebar(){
+function setupSidebar() {
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
 
-const menuBtn = document.getElementById("menuBtn")
-const sidebar = document.getElementById("sidebar")
-const overlay = document.getElementById("sidebarOverlay")
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("sidebar-open");
+      overlay.classList.toggle("overlay-show");
+    });
 
-if(menuBtn){
-
-menuBtn.addEventListener("click",()=>{
-
-sidebar.classList.toggle("sidebar-open")
-overlay.classList.toggle("overlay-show")
-
-})
-
-overlay.addEventListener("click",()=>{
-
-sidebar.classList.remove("sidebar-open")
-overlay.classList.remove("overlay-show")
-
-})
-
-}
-
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("sidebar-open");
+      overlay.classList.remove("overlay-show");
+    });
+  }
 }
 
 /* LOGOUT */
 
-function setupLogout(){
+function setupLogout() {
+  const logoutBtn = document.getElementById("logoutBtn");
 
-const logoutBtn = document.getElementById("logoutBtn")
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await supabase.auth.signOut();
 
-if(logoutBtn){
-
-logoutBtn.addEventListener("click",async()=>{
-
-await supabase.auth.signOut()
-
-window.location.href="/frontend/index.html"
-
-})
-
+      window.location.href = "/frontend/index.html";
+    });
+  }
 }
 
-}
-
-loadLayout()
+loadLayout();
