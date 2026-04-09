@@ -1,156 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Re(start) - Irlanda</title>
 
-<head>
-<meta charset="UTF-8">
-<title>Re(start) - Irlanda</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
 
-<link rel="stylesheet" href="../css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <body class="page-enter">
+    <div class="background"></div>
 
-</head>
+    <!-- SIDEBAR COMPONENT -->
+    <div id="sidebar"></div>
 
-<body class="page-enter">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<div class="background"></div>
+    <!-- NAVBAR COMPONENT -->
+    <div id="navbar"></div>
 
-<!-- SIDEBAR COMPONENT -->
-<div id="sidebar"></div>
+    <div class="country-container">
+      <div class="country-help-text">Com o que você precisa de ajuda?</div>
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+      <div class="countries">
+        <div class="dev-wrapper">
+          <a
+            href="features/ireland-housing-list.html"
+            class="country-card country-large main-card"
+          >
+            <img src="images/house.png" />
 
-<!-- NAVBAR COMPONENT -->
-<div id="navbar"></div>
+            <p>Moradia</p>
+          </a>
+        </div>
 
+        <div class="dev-wrapper">
+          <a
+            href="features/ireland-jobs-list.html"
+            class="country-card country-large main-card"
+          >
+            <img src="images/job.png" />
 
-<div class="country-container">
+            <p>Trabalho</p>
+          </a>
+        </div>
 
-<div class="country-help-text">
-Com o que você precisa de ajuda?
-</div>
+        <div class="dev-wrapper">
+          <div class="country-card country-large dev-card">
+            <img src="images/documents.png" />
 
-<div class="countries">
+            <p>Documentação</p>
+          </div>
 
-<div class="dev-wrapper">
+          <div class="dev-label">Em desenvolvimento</div>
+        </div>
 
-<a href="features/ireland-housing-list.html" class="country-card country-large main-card">
+        <div class="dev-wrapper">
+          <div class="country-card country-large dev-card">
+            <img src="images/mobility.png" />
 
-<img src="images/house.png">
+            <p>Mobilidade</p>
+          </div>
 
-<p>Moradia</p>
+          <div class="dev-label">Em desenvolvimento</div>
+        </div>
+      </div>
+    </div>
 
-</a>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/components.js"></script>
 
-</div>
+    <script>
+      const bg = document.querySelector(".background");
 
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 60;
+        const y = (window.innerHeight / 2 - e.clientY) / 60;
 
-<div class="dev-wrapper">
+        bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+      });
 
-<div class="country-card country-large dev-card">
+      async function loadUser() {
+        const { data } = await supabase.auth.getUser();
 
-<img src="images/job.png">
+        if (!data.user) {
+          window.location.href = "index.html";
+          return;
+        }
 
-<p>Trabalho</p>
+        const name = data.user.user_metadata.name || "Usuário";
 
-</div>
+        document.getElementById("userName").textContent = name;
 
-<div class="dev-label">
-Em desenvolvimento
-</div>
+        const initial = name.charAt(0).toUpperCase();
 
-</div>
+        document.getElementById("avatar").textContent = initial;
+      }
 
+      loadUser();
 
-<div class="dev-wrapper">
+      /* slogan */
 
-<div class="country-card country-large dev-card">
-
-<img src="images/documents.png">
-
-<p>Documentação</p>
-
-</div>
-
-<div class="dev-label">
-Em desenvolvimento
-</div>
-
-</div>
-
-
-<div class="dev-wrapper">
-
-<div class="country-card country-large dev-card">
-
-<img src="images/mobility.png">
-
-<p>Mobilidade</p>
-
-</div>
-
-<div class="dev-label">
-Em desenvolvimento
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<script src="../js/supabase.js"></script>
-<script src="../js/components.js"></script>
-
-<script>
-
-const bg = document.querySelector(".background")
-
-document.addEventListener("mousemove",(e)=>{
-
-const x=(window.innerWidth/2-e.clientX)/60
-const y=(window.innerHeight/2-e.clientY)/60
-
-bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
-
-})
-
-async function loadUser(){
-
-const { data } = await supabase.auth.getUser()
-
-if(!data.user){
-
-window.location.href="index.html"
-return
-
-}
-
-const name = data.user.user_metadata.name || "Usuário"
-
-document.getElementById("userName").textContent = name
-
-const initial = name.charAt(0).toUpperCase()
-
-document.getElementById("avatar").textContent = initial
-
-}
-
-loadUser()
-
-/* slogan */
-
-setTimeout(()=>{
-
-const slogan = document.querySelector(".home-slogan")
-
-if(slogan){
-slogan.textContent = "Irlanda / Buscar ajuda"
-}
-
-},200)
-
-</script>
-
-</body>
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
+
+        if (slogan) {
+          slogan.textContent = "Irlanda / Buscar ajuda";
+        }
+      }, 200);
+    </script>
+  </body>
 </html>
