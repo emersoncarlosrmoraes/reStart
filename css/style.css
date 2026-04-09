@@ -1170,7 +1170,7 @@ button:hover {
   background: rgba(70, 70, 70, 0.95);
   font-weight: 600;
   padding: 12px 15px;
-  text-align: left;
+  text-align: center;
   color: #fff;
   font-size: 12px; /* diminua se estiver quebrando linha */
   white-space: nowrap; /* evita quebra de linha dentro do cabeçalho */
