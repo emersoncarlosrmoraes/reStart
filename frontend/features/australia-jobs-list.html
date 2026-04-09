@@ -2,10 +2,9 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Visualizar Moradias - Australia</title>
-
+    <title>Vagas de Trabalho - Austrália</title>
+    <!-- Chamando o CSS externo -->
     <link rel="stylesheet" href="../../css/style.css" />
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
 
@@ -14,126 +13,106 @@
 
     <div id="sidebar"></div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <div id="navbar">
-      <div class="navbar-user">
-        <div id="avatar" class="user-avatar">C</div>
-        <span id="userName">Carregando...</span>
-      </div>
-    </div>
+    <div id="navbar"></div>
 
     <div class="country-container">
-      <div class="ireland-cards-wrapper">
-        <div id="irelandCardsContainer" class="ireland-cards-container"></div>
+      <h2>Vagas de Trabalho Publicadas</h2>
+      <div class="jobs-list-container">
+        <div class="loader-jobs" id="loader">Carregando vagas...</div>
+        <table class="jobs-table" id="jobsTable" style="display: none">
+          <thead>
+            <tr>
+              <th>Nome da Vaga</th>
+              <th>Tipo de Trabalho</th>
+              <th>Cidade</th>
+              <th>Pagamento p/ Hora (AUD $)</th>
+              <th>A partir de</th>
+              <th>Contato</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody id="jobsBody">
+            <!-- Linhas serão inseridas via JS -->
+          </tbody>
+        </table>
       </div>
     </div>
 
     <script src="../../js/supabase.js"></script>
     <script src="../../js/components.js"></script>
-    <script src="../../js/app.js"></script>
 
     <script>
-      /* BACKGROUND MOVIMENTO */
-
       const bg = document.querySelector(".background");
-
       document.addEventListener("mousemove", (e) => {
         const x = (window.innerWidth / 2 - e.clientX) / 60;
         const y = (window.innerHeight / 2 - e.clientY) / 60;
-
         bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
       });
 
-      /* CARREGAR USUÁRIO */
-
       async function loadUser() {
         const { data } = await supabase.auth.getUser();
-
         if (!data.user) {
           window.location.href = "../index.html";
           return;
         }
-
         const name = data.user.user_metadata.name || "Usuário";
-
         document.getElementById("userName").textContent = name;
         document.getElementById("avatar").textContent = name
           .charAt(0)
           .toUpperCase();
       }
-
       loadUser();
 
-      /* SLOGAN */
-
+      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
-
         if (slogan) {
-          slogan.textContent =
-            "Australia / Buscar ajuda / Oportunidades de trabalho";
+          slogan.textContent = "Austrália / Oferecer ajuda / Vagas publicadas";
         }
       }, 200);
 
-      /* =====================
-   CARREGAR MORADIAS
-===================== */
+      /* ============================== */
+      /* Carregar vagas do Supabase */
+      /* ============================== */
+      async function loadJobs() {
+        const { data, error } = await supabase
+          .from("trabalho")
+          .select("*")
+          .order("available_from", { ascending: true });
 
-      async function loadAustraliaHousing() {
-        try {
-          const { data, error } = await supabase
-            .from("moradia")
-            .select("*")
-            .eq("country", "Australia")
-            .order("created_at", { ascending: false });
+        const loader = document.getElementById("loader");
+        const table = document.getElementById("jobsTable");
+        const tbody = document.getElementById("jobsBody");
 
-          if (error) throw error;
-
-          const container = document.getElementById("irelandCardsContainer");
-
-          container.innerHTML = "";
-
-          if (data.length === 0) {
-            container.innerHTML =
-              "<p style='color:white'>Nenhuma moradia cadastrada ainda.</p>";
-            return;
-          }
-
-          data.forEach((item) => {
-            let availableDate = item.available_from
-              ? new Date(item.available_from)
-              : null;
-
-            let availableStr = availableDate
-              ? `${("0" + availableDate.getDate()).slice(-2)}/${("0" + (availableDate.getMonth() + 1)).slice(-2)}/${availableDate.getFullYear()}`
-              : "-";
-
-            const card = document.createElement("div");
-
-            card.className = "ireland-card";
-
-            card.innerHTML = `
-
-<img src="${item.photo_url || "https://via.placeholder.com/300x180?text=Sem+Foto"}">
-
-<h3>${item.type} em ${item.city}</h3>
-
-<p><strong>Preço:</strong> $ ${item.price}</p>
-
-<p><strong>Disponível:</strong> ${availableStr}</p>
-
-<p><strong></strong> ${item.contact}</p>
-
-`;
-
-            container.appendChild(card);
-          });
-        } catch (err) {
-          console.error("Erro ao carregar moradias:", err.message);
+        if (error) {
+          loader.textContent = "Erro ao carregar vagas: " + error.message;
+          return;
         }
+
+        if (data.length === 0) {
+          loader.textContent = "Nenhuma vaga cadastrada ainda.";
+          return;
+        }
+
+        loader.style.display = "none";
+        table.style.display = "table";
+
+        data.forEach((job) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${job.job_name}</td>
+            <td>${job.type}</td>
+            <td>${job.city}</td>
+            <td>${job.price}</td>
+            <td>${job.available_from}</td>
+            <td>${job.contact}</td>
+            <td class="job-description-cell">${job.job_description}</td>
+          `;
+          tbody.appendChild(row);
+        });
       }
 
-      loadAustraliaHousing();
+      loadJobs();
     </script>
   </body>
 </html>
