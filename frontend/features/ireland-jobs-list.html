@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Visualizar Moradias - Irlanda</title>
+    <title>Visualizar Moradias - Australia</title>
 
     <link rel="stylesheet" href="../../css/style.css" />
 
@@ -70,7 +70,8 @@
         const slogan = document.querySelector(".home-slogan");
 
         if (slogan) {
-          slogan.textContent = "Irlanda / Buscar ajuda / Lista de moradias";
+          slogan.textContent =
+            "Irlanda / Buscar ajuda / Oportunidades de trabalho";
         }
       }, 200);
 
@@ -78,12 +79,12 @@
    CARREGAR MORADIAS
 ===================== */
 
-      async function loadIrelandHousing() {
+      async function loadAustraliaHousing() {
         try {
           const { data, error } = await supabase
             .from("moradia")
             .select("*")
-            .eq("country", "Ireland")
+            .eq("country", "Australia")
             .order("created_at", { ascending: false });
 
           if (error) throw error;
@@ -117,7 +118,7 @@
 
 <h3>${item.type} em ${item.city}</h3>
 
-<p><strong>Preço:</strong> € ${item.price}</p>
+<p><strong>Preço:</strong> $ ${item.price}</p>
 
 <p><strong>Disponível:</strong> ${availableStr}</p>
 
@@ -132,7 +133,7 @@
         }
       }
 
-      loadIrelandHousing();
+      loadAustraliaHousing();
     </script>
   </body>
 </html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulário de cadastro</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body class="page-enter">
+    <div class="background"></div>
+
+    <div id="sidebar"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div id="navbar"></div>
+
+    <div class="country-container">
+      <h2>Formulário de cadastro</h2>
+
+      <form id="housingFormAU" class="form-left" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-field photo-field">
+            <label>Foto da Moradia</label>
+            <input type="file" id="photo" accept="image/*" required />
+          </div>
+
+          <div class="form-field">
+            <label>Tipo de Moradia</label>
+            <select id="type" required>
+              <option value="">Selecione...</option>
+              <option value="Casa">Casa</option>
+              <option value="Apartamento">Apartamento</option>
+              <option value="Quarto Compartilhado">Quarto Compartilhado</option>
+              <option value="Estúdio">Estúdio</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Cidade</label>
+            <input type="text" id="city" placeholder="Cidade" required />
+          </div>
+
+          <div class="form-field small-field">
+            <label>Preço do aluguel (AUD $)</label>
+            <input type="number" id="price" placeholder="Ex: 300" required />
+          </div>
+
+          <div class="form-field small-field">
+            <label>Disponibilidade</label>
+            <input type="date" id="available_from" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field full-width">
+            <label>Contato para mais informações (Email ou Telefone)</label>
+            <input
+              type="text"
+              id="contact"
+              placeholder="Email ou Telefone"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Cadastrar</button>
+      </form>
+    </div>
+
+    <script src="../../js/supabase.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/app.js"></script>
+
+    <script>
+      const bg = document.querySelector(".background");
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 60;
+        const y = (window.innerHeight / 2 - e.clientY) / 60;
+        bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+      });
+
+      async function loadUser() {
+        const { data } = await supabase.auth.getUser();
+        if (!data.user) {
+          window.location.href = "../index.html";
+          return;
+        }
+        const name = data.user.user_metadata.name || "Usuário";
+        document.getElementById("userName").textContent = name;
+        document.getElementById("avatar").textContent = name
+          .charAt(0)
+          .toUpperCase();
+      }
+      loadUser();
+
+      /* slogan */
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
+        if (slogan) {
+          slogan.textContent =
+            "Irlanda / Oferecer ajuda / Cadastrar vaga de trabalho";
+        }
+      }, 200);
+
+      /* FORMULÁRIO */
+      document
+        .getElementById("housingFormAU")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const city = document.getElementById("city").value;
+          const type = document.getElementById("type").value;
+          const price = document.getElementById("price").value;
+          const available_from =
+            document.getElementById("available_from").value;
+          const contact = document.getElementById("contact").value;
+          const photoFile = document.getElementById("photo").files[0];
+
+          if (!photoFile) {
+            alert("Por favor, selecione uma foto.");
+            return;
+          }
+
+          const fileName = `${Date.now()}_${photoFile.name}`;
+          const { data: photoData, error: photoError } = await supabase.storage
+            .from("housing-photos")
+            .upload(fileName, photoFile);
+
+          if (photoError) {
+            alert("Erro ao enviar foto: " + photoError.message);
+            return;
+          }
+
+          const photo_url = supabase.storage
+            .from("housing-photos")
+            .getPublicUrl(fileName).data.publicUrl;
+
+          // Inserir dados na tabela 'moradia' (funciona com RLS ativado)
+          const { data, error } = await supabase.from("moradia").insert([
+            {
+              country: "Australia",
+              type,
+              city,
+              price,
+              available_from,
+              contact,
+              photo_url,
+            },
+          ]);
+
+          if (error) {
+            alert("Erro ao cadastrar moradia: " + error.message);
+            return;
+          }
+
+          alert("Moradia cadastrada na Irlanda!");
+
+          const btn = this.querySelector(".btn-submit");
+          btn.style.background = "rgba(255,255,255,0.4)";
+          setTimeout(
+            () => (btn.style.background = "rgba(255,255,255,0.15)"),
+            200,
+          );
+
+          this.reset();
+        });
+    </script>
+  </body>
+</html>
