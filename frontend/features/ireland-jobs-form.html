@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Formulário de cadastro</title>
+    <title>Cadastro de vaga de trabalho - Irlanda</title>
     <link rel="stylesheet" href="../../css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -15,57 +15,69 @@
     <div id="navbar"></div>
 
     <div class="country-container">
-      <h2>Formulário de cadastro</h2>
+      <h2>Cadastro de vaga de trabalho - Irlanda</h2>
 
-      <form id="housingFormAU" class="form-left" enctype="multipart/form-data">
-        <div class="form-row">
-          <div class="form-field photo-field">
-            <label>Foto da Moradia</label>
-            <input type="file" id="photo" accept="image/*" required />
-          </div>
-
-          <div class="form-field">
-            <label>Tipo de Moradia</label>
-            <select id="type" required>
-              <option value="">Selecione...</option>
-              <option value="Casa">Casa</option>
-              <option value="Apartamento">Apartamento</option>
-              <option value="Quarto Compartilhado">Quarto Compartilhado</option>
-              <option value="Estúdio">Estúdio</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-field">
-            <label>Cidade</label>
-            <input type="text" id="city" placeholder="Cidade" required />
-          </div>
-
-          <div class="form-field small-field">
-            <label>Preço do aluguel (AUD $)</label>
-            <input type="number" id="price" placeholder="Ex: 300" required />
-          </div>
-
-          <div class="form-field small-field">
-            <label>Disponibilidade</label>
-            <input type="date" id="available_from" required />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-field full-width">
-            <label>Contato para mais informações (Email ou Telefone)</label>
+      <form id="jobsFormIE" class="form-modern-jobs">
+        <div class="form-grid-jobs">
+          <div class="form-field-jobs">
+            <label>Nome da vaga</label>
             <input
               type="text"
-              id="contact"
-              placeholder="Email ou Telefone"
+              id="job_name"
+              placeholder="Ex: Eletricista"
               required
             />
           </div>
+
+          <div class="form-field-jobs">
+            <label>Tipo de Trabalho</label>
+            <select id="type" required>
+              <option value="">Selecione...</option>
+              <option value="Full-Time">Full-Time</option>
+              <option value="Part-Time">Part-Time</option>
+              <option value="Casual">Casual</option>
+            </select>
+          </div>
+
+          <div class="form-field-jobs">
+            <label>Cidade</label>
+            <input type="text" id="city" placeholder="Ex: Dublin" required />
+          </div>
+
+          <div class="form-field-jobs">
+            <label>Pagamento por hora (EUR €)</label>
+            <input type="number" id="price" placeholder="Ex: 25" required />
+          </div>
+
+          <div class="form-field-jobs">
+            <label>A partir de</label>
+            <input type="date" id="available_from" required />
+          </div>
+
+          <div class="form-field-jobs">
+            <label>Contato para mais informações</label>
+            <input
+              type="text"
+              id="contact"
+              placeholder="Email ou telefone"
+              required
+            />
+          </div>
+
+          <div class="form-field-jobs full-width-jobs">
+            <label>Descrição da vaga</label>
+            <textarea
+              id="job_description"
+              placeholder="Detalhes da vaga"
+              rows="8"
+              required
+            ></textarea>
+          </div>
         </div>
 
-        <button type="submit" class="btn-submit">Cadastrar</button>
+        <div class="form-actions-jobs">
+          <button type="submit" class="btn-submit-jobs">Publicar vaga</button>
+        </div>
       </form>
     </div>
 
@@ -95,7 +107,6 @@
       }
       loadUser();
 
-      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
         if (slogan) {
@@ -104,65 +115,44 @@
         }
       }, 200);
 
-      /* FORMULÁRIO */
       document
-        .getElementById("housingFormAU")
+        .getElementById("jobsFormIE")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const city = document.getElementById("city").value;
+          const job_name = document.getElementById("job_name").value;
           const type = document.getElementById("type").value;
+          const city = document.getElementById("city").value;
           const price = document.getElementById("price").value;
           const available_from =
             document.getElementById("available_from").value;
           const contact = document.getElementById("contact").value;
-          const photoFile = document.getElementById("photo").files[0];
+          const job_description =
+            document.getElementById("job_description").value;
 
-          if (!photoFile) {
-            alert("Por favor, selecione uma foto.");
-            return;
-          }
-
-          const fileName = `${Date.now()}_${photoFile.name}`;
-          const { data: photoData, error: photoError } = await supabase.storage
-            .from("housing-photos")
-            .upload(fileName, photoFile);
-
-          if (photoError) {
-            alert("Erro ao enviar foto: " + photoError.message);
-            return;
-          }
-
-          const photo_url = supabase.storage
-            .from("housing-photos")
-            .getPublicUrl(fileName).data.publicUrl;
-
-          // Inserir dados na tabela 'moradia' (funciona com RLS ativado)
-          const { data, error } = await supabase.from("moradia").insert([
+          const { data, error } = await supabase.from("trabalho").insert([
             {
-              country: "Australia",
+              country: "Ireland",
+              job_name,
               type,
               city,
               price,
               available_from,
               contact,
-              photo_url,
+              job_description,
             },
           ]);
 
           if (error) {
-            alert("Erro ao cadastrar moradia: " + error.message);
+            alert("Erro ao cadastrar vaga: " + error.message);
             return;
           }
 
-          alert("Moradia cadastrada na Irlanda!");
+          alert("Vaga cadastrada com sucesso!");
 
-          const btn = this.querySelector(".btn-submit");
-          btn.style.background = "rgba(255,255,255,0.4)";
-          setTimeout(
-            () => (btn.style.background = "rgba(255,255,255,0.15)"),
-            200,
-          );
+          const btn = this.querySelector(".btn-submit-jobs");
+          btn.style.transform = "scale(0.97)";
+          setTimeout(() => (btn.style.transform = "scale(1)"), 150);
 
           this.reset();
         });

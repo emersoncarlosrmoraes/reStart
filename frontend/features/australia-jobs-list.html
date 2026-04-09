@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Vagas de Trabalho - Austrália</title>
-    <!-- Chamando o CSS externo -->
     <link rel="stylesheet" href="../../css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -25,15 +24,13 @@
               <th>Nome da Vaga</th>
               <th>Tipo de Trabalho</th>
               <th>Cidade</th>
-              <th>Pagamento p/ Hora (AUD $)</th>
+              <th>Pagamento p/ Hora (EUR €)</th>
               <th>A partir de</th>
               <th>Contato</th>
               <th>Descrição</th>
             </tr>
           </thead>
-          <tbody id="jobsBody">
-            <!-- Linhas serão inseridas via JS -->
-          </tbody>
+          <tbody id="jobsBody"></tbody>
         </table>
       </div>
     </div>
@@ -63,21 +60,18 @@
       }
       loadUser();
 
-      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
         if (slogan) {
-          slogan.textContent = "Austrália / Oferecer ajuda / Vagas publicadas";
+          slogan.textContent = "Austrália / Buscar ajuda / Vagas publicadas";
         }
       }, 200);
 
-      /* ============================== */
-      /* Carregar vagas do Supabase */
-      /* ============================== */
       async function loadJobs() {
         const { data, error } = await supabase
           .from("trabalho")
           .select("*")
+          .eq("country", "Australia")
           .order("available_from", { ascending: true });
 
         const loader = document.getElementById("loader");
