@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auxílio com Documentação</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body class="page-enter">
+    <div class="background"></div>
+
+    <div id="sidebar"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div id="navbar"></div>
+
+    <div class="country-container">
+      <h2>Auxílio com Documentação</h2>
+
+      <!-- CONTEÚDO INICIAL -->
+      <div class="documents-container">
+        <div class="doc-card">
+          <h3>TFN (Tax File Number)</h3>
+          <p>Documento essencial para trabalhar legalmente na Austrália.</p>
+        </div>
+
+        <div class="doc-card">
+          <h3>Conta Bancária</h3>
+          <p>Abra sua conta para receber salários e movimentar dinheiro.</p>
+        </div>
+
+        <div class="doc-card">
+          <h3>Seguro Saúde (OSHC)</h3>
+          <p>Obrigatório para estudantes internacionais.</p>
+        </div>
+
+        <div class="doc-card">
+          <h3>Visto</h3>
+          <p>Entenda os tipos de visto e requisitos necessários.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../js/supabase.js"></script>
+    <script src="../../js/components.js"></script>
+
+    <script>
+      const bg = document.querySelector(".background");
+
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 60;
+        const y = (window.innerHeight / 2 - e.clientY) / 60;
+        bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+      });
+
+      async function loadUser() {
+        const { data } = await supabase.auth.getUser();
+
+        if (!data.user) {
+          window.location.href = "../index.html";
+          return;
+        }
+
+        const name = data.user.user_metadata.name || "Usuário";
+        document.getElementById("userName").textContent = name;
+        document.getElementById("avatar").textContent = name
+          .charAt(0)
+          .toUpperCase();
+      }
+
+      loadUser();
+
+      /* slogan */
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
+
+        if (slogan) {
+          slogan.textContent = "Austrália / Buscar ajuda / Documentação";
+        }
+      }, 200);
+    </script>
+  </body>
+</html>
