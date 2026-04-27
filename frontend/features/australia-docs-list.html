@@ -17,26 +17,37 @@
     <div class="country-container">
       <h2>Auxílio com Documentação</h2>
 
-      <!-- CONTEÚDO INICIAL -->
       <div class="documents-container">
-        <div class="doc-card">
-          <h3>TFN (Tax File Number)</h3>
-          <p>Documento essencial para trabalhar legalmente na Austrália.</p>
+        <!-- TFN -->
+        <div class="glass-card">
+          <img src="/frontend/images/taxes.png" class="doc-icon" />
+          <h3>TFN</h3>
+          <p>Necessário para trabalhar legalmente e pagar impostos.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
+        <!-- Banco -->
+        <div class="glass-card">
+          <img src="/frontend/images/bank.png" class="doc-icon" />
           <h3>Conta Bancária</h3>
-          <p>Abra sua conta para receber salários e movimentar dinheiro.</p>
+          <p>Abra sua conta para receber salário e movimentar dinheiro.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
-          <h3>Seguro Saúde (OSHC)</h3>
-          <p>Obrigatório para estudantes internacionais.</p>
+        <!-- Seguro -->
+        <div class="glass-card">
+          <img src="/frontend/images/healthcare.png" class="doc-icon" />
+          <h3>Seguro Saúde</h3>
+          <p>Obrigatório para estudantes e essencial no dia a dia.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
+        <!-- Visto -->
+        <div class="glass-card">
+          <img src="/frontend/images/visa.png" class="doc-icon" />
           <h3>Visto</h3>
-          <p>Entenda os tipos de visto e requisitos necessários.</p>
+          <p>Entenda os requisitos e mantenha sua situação regular.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
       </div>
     </div>
@@ -70,10 +81,8 @@
 
       loadUser();
 
-      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
-
         if (slogan) {
           slogan.textContent = "Austrália / Buscar ajuda / Documentação";
         }

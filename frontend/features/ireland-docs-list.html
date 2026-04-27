@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Auxílio com Documentação - Irlanda</title>
+    <title>Auxílio com Documentação</title>
     <link rel="stylesheet" href="../../css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -17,31 +17,37 @@
     <div class="country-container">
       <h2>Auxílio com Documentação</h2>
 
-      <!-- CONTEÚDO -->
       <div class="documents-container">
-        <div class="doc-card">
-          <h3>PPS Number</h3>
-          <p>
-            Equivalente ao CPF/TFN. Necessário para trabalhar legalmente na
-            Irlanda.
-          </p>
+        <!-- TFN -->
+        <div class="glass-card">
+          <img src="/frontend/images/taxes.png" class="doc-icon" />
+          <h3>TFN</h3>
+          <p>Necessário para trabalhar legalmente e pagar impostos.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
+        <!-- Banco -->
+        <div class="glass-card">
+          <img src="/frontend/images/bank.png" class="doc-icon" />
           <h3>Conta Bancária</h3>
-          <p>Abra sua conta para receber salário e organizar suas finanças.</p>
+          <p>Abra sua conta para receber salário e movimentar dinheiro.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
+        <!-- Seguro -->
+        <div class="glass-card">
+          <img src="/frontend/images/healthcare.png" class="doc-icon" />
           <h3>Seguro Saúde</h3>
-          <p>Obrigatório para estudantes e recomendado para todos.</p>
+          <p>Obrigatório para estudantes e essencial no dia a dia.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
 
-        <div class="doc-card">
-          <h3>Visto / Permissão de Residência</h3>
-          <p>
-            Entenda as regras e requisitos para permanecer legalmente no país.
-          </p>
+        <!-- Visto -->
+        <div class="glass-card">
+          <img src="/frontend/images/visa.png" class="doc-icon" />
+          <h3>Visto</h3>
+          <p>Entenda os requisitos e mantenha sua situação regular.</p>
+          <button class="doc-btn">Ver ajuda</button>
         </div>
       </div>
     </div>
@@ -75,10 +81,8 @@
 
       loadUser();
 
-      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
-
         if (slogan) {
           slogan.textContent = "Irlanda / Buscar ajuda / Documentação";
         }
