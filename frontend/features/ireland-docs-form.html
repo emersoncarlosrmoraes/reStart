@@ -19,6 +19,7 @@
 
       <form id="documentFormIE" class="form-modern-jobs">
         <div class="form-grid-jobs">
+          <!-- Tipo de documento -->
           <div class="form-field-jobs">
             <label>Tipo de Documento</label>
             <select id="document_type" required>
@@ -30,16 +31,24 @@
             </select>
           </div>
 
+          <!-- Nome -->
           <div class="form-field-jobs">
             <label>Seu Nome</label>
-            <input type="text" id="helper_name" required />
+            <input
+              type="text"
+              id="helper_name"
+              placeholder="Ex: João Silva"
+              required
+            />
           </div>
 
+          <!-- Cidade -->
           <div class="form-field-jobs">
             <label>Cidade</label>
-            <input type="text" id="city" required />
+            <input type="text" id="city" placeholder="Ex: Dublin" required />
           </div>
 
+          <!-- Forma de ajuda -->
           <div class="form-field-jobs">
             <label>Forma de Ajuda</label>
             <select id="support_type" required>
@@ -49,14 +58,26 @@
             </select>
           </div>
 
+          <!-- Contato -->
           <div class="form-field-jobs">
             <label>Contato</label>
-            <input type="text" id="contact" required />
+            <input
+              type="text"
+              id="contact"
+              placeholder="WhatsApp, Email ou Telefone"
+              required
+            />
           </div>
 
+          <!-- Descrição -->
           <div class="form-field-jobs full-width-jobs">
             <label>Descrição</label>
-            <textarea id="description" rows="8" required></textarea>
+            <textarea
+              id="description"
+              placeholder="Ex: Posso ajudar brasileiros a solicitar o PPS e explicar todo o processo."
+              rows="8"
+              required
+            ></textarea>
           </div>
         </div>
 
@@ -86,6 +107,13 @@
           window.location.href = "../index.html";
           return;
         }
+
+        const name = data.user.user_metadata.name || "Usuário";
+
+        document.getElementById("userName").textContent = name;
+        document.getElementById("avatar").textContent = name
+          .charAt(0)
+          .toUpperCase();
       }
 
       loadUser();
@@ -129,6 +157,15 @@
           }
 
           alert("Ajuda cadastrada com sucesso!");
+
+          const btn = this.querySelector(".btn-submit-jobs");
+
+          btn.style.transform = "scale(0.97)";
+
+          setTimeout(() => {
+            btn.style.transform = "scale(1)";
+          }, 150);
+
           this.reset();
         });
     </script>
