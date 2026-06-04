@@ -14,6 +14,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div id="navbar"></div>
 
+    <!-- NÃO ALTEREI NADA DO SEU LAYOUT -->
     <div class="doc-list-page">
       <h2 id="doc-list-title" class="doc-list-title">
         Auxílio com Documentação
@@ -47,6 +48,10 @@
 
       loadUser();
 
+      /* =========================
+         TÍTULO DINÂMICO
+      ========================= */
+
       const urlParams = new URLSearchParams(window.location.search);
       const type = urlParams.get("type");
 
@@ -60,6 +65,23 @@
       if (type && titles[type]) {
         document.getElementById("doc-list-title").textContent = titles[type];
       }
+
+      /* =========================
+         SLOGAN (SÓ ISSO QUE FOI ADICIONADO)
+      ========================= */
+
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
+
+        if (slogan) {
+          slogan.textContent =
+            "Austrália / Buscar ajuda / Auxílio com documentação";
+        }
+      }, 200);
+
+      /* =========================
+         CARREGAR DADOS
+      ========================= */
 
       async function loadDocs() {
         const container = document.getElementById("doc-list-container");
@@ -103,17 +125,13 @@
 
           card.innerHTML = `
             <img src="${icon}" class="doc-list-icon" />
-
             <h3 class="doc-list-name">${item.helper_name}</h3>
-
             <p class="doc-list-city">
               ${item.city} • ${item.support_type}
             </p>
-
             <p class="doc-list-desc">
               ${item.description}
             </p>
-
             <button class="doc-list-btn"
               onclick="window.open('https://wa.me/${item.contact.replace(/\D/g, "")}', '_blank')">
               Entrar em contato
