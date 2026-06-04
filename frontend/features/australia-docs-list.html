@@ -14,41 +14,13 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div id="navbar"></div>
 
-    <div class="country-container">
-      <h2>Auxílio com Documentação</h2>
+    <div class="doc-list-page">
+      <h2 id="doc-list-title" class="doc-list-title">
+        Auxílio com Documentação
+      </h2>
 
-      <div class="documents-container">
-        <!-- TFN -->
-        <div class="glass-card">
-          <img src="/frontend/images/taxes.png" class="doc-icon" />
-          <h3>TFN</h3>
-          <p>Necessário para trabalhar legalmente e pagar impostos.</p>
-          <button class="doc-btn">Ver ajuda</button>
-        </div>
-
-        <!-- Banco -->
-        <div class="glass-card">
-          <img src="/frontend/images/bank.png" class="doc-icon" />
-          <h3>Conta Bancária</h3>
-          <p>Abra sua conta para receber salário e movimentar dinheiro.</p>
-          <button class="doc-btn">Ver ajuda</button>
-        </div>
-
-        <!-- Seguro -->
-        <div class="glass-card">
-          <img src="/frontend/images/healthcare.png" class="doc-icon" />
-          <h3>Seguro Saúde</h3>
-          <p>Obrigatório para estudantes e essencial no dia a dia.</p>
-          <button class="doc-btn">Ver ajuda</button>
-        </div>
-
-        <!-- Visto -->
-        <div class="glass-card">
-          <img src="/frontend/images/visa.png" class="doc-icon" />
-          <h3>Visto</h3>
-          <p>Entenda os requisitos e mantenha sua situação regular.</p>
-          <button class="doc-btn">Ver ajuda</button>
-        </div>
+      <div class="doc-list-grid" id="doc-list-container">
+        <!-- cards aqui -->
       </div>
     </div>
 
@@ -71,22 +43,88 @@
           window.location.href = "../index.html";
           return;
         }
-
-        const name = data.user.user_metadata.name || "Usuário";
-        document.getElementById("userName").textContent = name;
-        document.getElementById("avatar").textContent = name
-          .charAt(0)
-          .toUpperCase();
       }
 
       loadUser();
 
-      setTimeout(() => {
-        const slogan = document.querySelector(".home-slogan");
-        if (slogan) {
-          slogan.textContent = "Austrália / Buscar ajuda / Documentação";
+      const urlParams = new URLSearchParams(window.location.search);
+      const type = urlParams.get("type");
+
+      const titles = {
+        TFN: "Auxílio com TFN",
+        "Conta Bancária": "Auxílio com Conta Bancária",
+        "Seguro Saúde": "Auxílio com Seguro Saúde",
+        Visto: "Auxílio com Visto",
+      };
+
+      if (type && titles[type]) {
+        document.getElementById("doc-list-title").textContent = titles[type];
+      }
+
+      async function loadDocs() {
+        const container = document.getElementById("doc-list-container");
+
+        let query = supabase
+          .from("document_help")
+          .select("*")
+          .eq("country", "Australia");
+
+        if (type) {
+          query = query.eq("document_type", type);
         }
-      }, 200);
+
+        const { data, error } = await query;
+
+        if (error) {
+          container.innerHTML = "<p>Erro ao carregar dados</p>";
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          container.innerHTML = "<p>Nenhuma ajuda encontrada</p>";
+          return;
+        }
+
+        data.forEach((item) => {
+          let icon = "/frontend/images/doc.png";
+
+          if (item.document_type === "TFN") {
+            icon = "/frontend/images/taxes.png";
+          } else if (item.document_type === "Conta Bancária") {
+            icon = "/frontend/images/bank.png";
+          } else if (item.document_type === "Seguro Saúde") {
+            icon = "/frontend/images/healthcare.png";
+          } else if (item.document_type === "Visto") {
+            icon = "/frontend/images/visa.png";
+          }
+
+          const card = document.createElement("div");
+          card.className = "doc-list-card";
+
+          card.innerHTML = `
+            <img src="${icon}" class="doc-list-icon" />
+
+            <h3 class="doc-list-name">${item.helper_name}</h3>
+
+            <p class="doc-list-city">
+              ${item.city} • ${item.support_type}
+            </p>
+
+            <p class="doc-list-desc">
+              ${item.description}
+            </p>
+
+            <button class="doc-list-btn"
+              onclick="window.open('https://wa.me/${item.contact.replace(/\D/g, "")}', '_blank')">
+              Entrar em contato
+            </button>
+          `;
+
+          container.appendChild(card);
+        });
+      }
+
+      loadDocs();
     </script>
   </body>
 </html>
