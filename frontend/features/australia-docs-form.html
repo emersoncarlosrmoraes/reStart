@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Cadastro de vaga de trabalho</title>
+    <title>Cadastro de Auxílio com Documentação</title>
     <link rel="stylesheet" href="../../css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
@@ -15,31 +15,31 @@
     <div id="navbar"></div>
 
     <div class="country-container">
-      <h2>Cadastro de auxilio na solicitação de Documentos</h2>
+      <h2>Cadastro de Auxílio com Documentação</h2>
 
-      <form id="jobsFormAU" class="form-modern-jobs">
-        <!-- GRID PRINCIPAL -->
+      <form id="documentFormAU" class="form-modern-jobs">
         <div class="form-grid-jobs">
-          <!-- Nome da vaga -->
+          <!-- Tipo de documento -->
           <div class="form-field-jobs">
-            <label>Nome da vaga</label>
-            <input
-              type="text"
-              id="job_name"
-              placeholder="Ex: Eletricista"
-              required
-            />
+            <label>Tipo de Documento</label>
+            <select id="document_type" required>
+              <option value="">Selecione...</option>
+              <option value="TFN">TFN</option>
+              <option value="Conta Bancária">Conta Bancária</option>
+              <option value="Seguro Saúde">Seguro Saúde</option>
+              <option value="Visto">Visto</option>
+            </select>
           </div>
 
-          <!-- Tipo de trabalho -->
+          <!-- Nome -->
           <div class="form-field-jobs">
-            <label>Tipo de Trabalho</label>
-            <select id="type" required>
-              <option value="">Selecione...</option>
-              <option value="Full-Time">Full-Time</option>
-              <option value="Part-Time">Part-Time</option>
-              <option value="Casual">Casual</option>
-            </select>
+            <label>Seu Nome</label>
+            <input
+              type="text"
+              id="helper_name"
+              placeholder="Ex: João Silva"
+              required
+            />
           </div>
 
           <!-- Cidade -->
@@ -48,44 +48,41 @@
             <input type="text" id="city" placeholder="Ex: Brisbane" required />
           </div>
 
-          <!-- Pagamento -->
+          <!-- Forma de ajuda -->
           <div class="form-field-jobs">
-            <label>Pagamento por hora (AUD $)</label>
-            <input type="number" id="price" placeholder="Ex: 25" required />
-          </div>
-
-          <!-- A partir de -->
-          <div class="form-field-jobs">
-            <label>A partir de</label>
-            <input type="date" id="available_from" required />
+            <label>Forma de Ajuda</label>
+            <select id="support_type" required>
+              <option value="">Selecione...</option>
+              <option value="Presencial">Presencial</option>
+              <option value="Online">Online</option>
+            </select>
           </div>
 
           <!-- Contato -->
           <div class="form-field-jobs">
-            <label>Contato para mais informações</label>
+            <label>Contato</label>
             <input
               type="text"
               id="contact"
-              placeholder="Email ou telefone"
+              placeholder="WhatsApp, Email ou Telefone"
               required
             />
           </div>
 
-          <!-- Descrição da vaga -->
+          <!-- Descrição -->
           <div class="form-field-jobs full-width-jobs">
-            <label>Descrição da vaga</label>
+            <label>Descrição</label>
             <textarea
-              id="job_description"
-              placeholder="Detalhes da vaga"
+              id="description"
+              placeholder="Ex: Posso ajudar brasileiros a solicitar o TFN e explicar todo o processo."
               rows="8"
               required
             ></textarea>
           </div>
         </div>
 
-        <!-- BOTÃO -->
         <div class="form-actions-jobs">
-          <button type="submit" class="btn-submit-jobs">Publicar vaga</button>
+          <button type="submit" class="btn-submit-jobs">Publicar ajuda</button>
         </div>
       </form>
     </div>
@@ -96,6 +93,7 @@
 
     <script>
       const bg = document.querySelector(".background");
+
       document.addEventListener("mousemove", (e) => {
         const x = (window.innerWidth / 2 - e.clientX) / 60;
         const y = (window.innerHeight / 2 - e.clientY) / 60;
@@ -104,66 +102,74 @@
 
       async function loadUser() {
         const { data } = await supabase.auth.getUser();
+
         if (!data.user) {
           window.location.href = "../index.html";
           return;
         }
+
         const name = data.user.user_metadata.name || "Usuário";
+
         document.getElementById("userName").textContent = name;
         document.getElementById("avatar").textContent = name
           .charAt(0)
           .toUpperCase();
       }
+
       loadUser();
 
-      /* slogan */
       setTimeout(() => {
         const slogan = document.querySelector(".home-slogan");
+
         if (slogan) {
           slogan.textContent =
-            "Austrália / Oferecer ajuda / Cadastro de auxilio na documentação";
+            "Austrália / Oferecer ajuda / Cadastro de auxílio com documentação";
         }
       }, 200);
 
-      /* FORMULÁRIO */
       document
-        .getElementById("jobsFormAU")
+        .getElementById("documentFormAU")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const job_name = document.getElementById("job_name").value;
-          const type = document.getElementById("type").value;
-          const city = document.getElementById("city").value;
-          const price = document.getElementById("price").value;
-          const available_from =
-            document.getElementById("available_from").value;
-          const contact = document.getElementById("contact").value;
-          const job_description =
-            document.getElementById("job_description").value;
+          const document_type = document.getElementById("document_type").value;
 
-          const { data, error } = await supabase.from("trabalho").insert([
+          const helper_name = document.getElementById("helper_name").value;
+
+          const city = document.getElementById("city").value;
+
+          const support_type = document.getElementById("support_type").value;
+
+          const contact = document.getElementById("contact").value;
+
+          const description = document.getElementById("description").value;
+
+          const { error } = await supabase.from("document_help").insert([
             {
               country: "Australia",
-              job_name,
-              type,
+              document_type,
+              helper_name,
               city,
-              price,
-              available_from,
+              support_type,
               contact,
-              job_description,
+              description,
             },
           ]);
 
           if (error) {
-            alert("Erro ao cadastrar vaga: " + error.message);
+            alert("Erro ao cadastrar ajuda: " + error.message);
             return;
           }
 
-          alert("Vaga cadastrada com sucesso!");
+          alert("Ajuda cadastrada com sucesso!");
 
           const btn = this.querySelector(".btn-submit-jobs");
+
           btn.style.transform = "scale(0.97)";
-          setTimeout(() => (btn.style.transform = "scale(1)"), 150);
+
+          setTimeout(() => {
+            btn.style.transform = "scale(1)";
+          }, 150);
 
           this.reset();
         });
