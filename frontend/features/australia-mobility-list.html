@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auxílio com Mobilidade</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+
+  <body class="page-enter">
+    <div class="background"></div>
+
+    <div id="sidebar"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div id="navbar"></div>
+
+    <div class="doc-list-page">
+      <h2 id="mob-list-title" class="doc-list-title">Auxílio com Mobilidade</h2>
+
+      <div class="doc-list-grid" id="mob-list-container"></div>
+    </div>
+
+    <script src="../../js/supabase.js"></script>
+    <script src="../../js/components.js"></script>
+
+    <script>
+      const bg = document.querySelector(".background");
+
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 60;
+        const y = (window.innerHeight / 2 - e.clientY) / 60;
+        bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+      });
+
+      async function loadUser() {
+        const { data } = await supabase.auth.getUser();
+
+        if (!data.user) {
+          window.location.href = "../index.html";
+          return;
+        }
+      }
+
+      loadUser();
+
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
+
+        if (slogan) {
+          slogan.textContent =
+            "Austrália / Buscar ajuda / Auxílio com mobilidade";
+        }
+      }, 200);
+
+      async function loadMobility() {
+        const container = document.getElementById("mob-list-container");
+
+        const { data, error } = await supabase
+          .from("mobility_help")
+          .select("*")
+          .eq("country", "Australia");
+
+        if (error) {
+          container.innerHTML = "<p>Erro ao carregar dados</p>";
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          container.innerHTML = "<p>Nenhuma ajuda encontrada</p>";
+          return;
+        }
+
+        data.forEach((item) => {
+          let icon = "/frontend/images/car.png";
+
+          const card = document.createElement("div");
+          card.className = "doc-list-card";
+
+          card.innerHTML = `
+            <img src="${icon}" class="doc-list-icon" />
+
+            <h3 class="doc-list-name">${item.helper_name}</h3>
+
+            <p class="doc-list-city">
+              ${item.city} • ${item.support_type}
+            </p>
+
+            <p class="doc-list-desc">
+              ${item.description}
+            </p>
+
+            <button class="doc-list-btn"
+              onclick="window.open('https://wa.me/${item.contact.replace(/\D/g, "")}', '_blank')">
+              Entrar em contato
+            </button>
+          `;
+
+          container.appendChild(card);
+        });
+      }
+
+      loadMobility();
+    </script>
+  </body>
+</html>
