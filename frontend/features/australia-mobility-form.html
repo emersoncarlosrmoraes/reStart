@@ -19,17 +19,19 @@
 
       <form id="mobilityFormAU" class="form-modern-jobs">
         <div class="form-grid-jobs">
-          <!-- Tipo de mobilidade -->
+          <!-- Tipo de ajuda -->
           <div class="form-field-jobs">
-            <label>Tipo de Mobilidade</label>
+            <label>Tipo de Ajuda</label>
             <select id="mobility_type" required>
               <option value="">Selecione...</option>
               <option value="Carteira de Motorista">
                 Carteira de Motorista
               </option>
-              <option value="Transporte Público">Transporte Público</option>
               <option value="Compra de Carro">Compra de Carro</option>
-              <option value="Apps de Transporte">Apps de Transporte</option>
+              <option value="Venda de Carro">Venda de Carro</option>
+              <option value="Transporte Público">Transporte Público</option>
+              <option value="Carona">Carona</option>
+              <option value="Dicas de Mobilidade">Dicas de Mobilidade</option>
             </select>
           </div>
 
@@ -76,7 +78,7 @@
             <label>Descrição</label>
             <textarea
               id="description"
-              placeholder="Ex: Posso ajudar brasileiros com carteira de motorista e regras de trânsito na Austrália."
+              placeholder="Ex: Posso ajudar brasileiros a transferir a CNH brasileira para a Austrália e explicar todo o processo."
               rows="8"
               required
             ></textarea>
@@ -125,7 +127,7 @@
 
         if (slogan) {
           slogan.textContent =
-            "Austrália / Oferecer ajuda / Auxílio com mobilidade";
+            "Austrália / Oferecer ajuda / Cadastro de auxílio com mobilidade";
         }
       }, 200);
 
@@ -135,10 +137,15 @@
           e.preventDefault();
 
           const mobility_type = document.getElementById("mobility_type").value;
+
           const helper_name = document.getElementById("helper_name").value;
+
           const city = document.getElementById("city").value;
+
           const support_type = document.getElementById("support_type").value;
+
           const contact = document.getElementById("contact").value;
+
           const description = document.getElementById("description").value;
 
           const { error } = await supabase.from("mobility_help").insert([
@@ -163,7 +170,10 @@
           const btn = this.querySelector(".btn-submit-jobs");
 
           btn.style.transform = "scale(0.97)";
-          setTimeout(() => (btn.style.transform = "scale(1)"), 150);
+
+          setTimeout(() => {
+            btn.style.transform = "scale(1)";
+          }, 150);
 
           this.reset();
         });
