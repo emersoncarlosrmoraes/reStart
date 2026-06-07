@@ -1424,3 +1424,456 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
+/* =========================
+   BASE
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* =========================
+   LAYOUT PRINCIPAL
+========================= */
+.main-container {
+  padding: 100px 25px 90px 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER (não alterar estrutura, só estilo)
+========================= */
+header,
+.top-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 1000;
+}
+
+/* =========================
+   TITULO / BOAS-VINDAS
+========================= */
+.welcome-box {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.welcome-box h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.welcome-box p {
+  margin-top: 8px;
+  color: #94a3b8;
+}
+
+/* =========================
+   CARDS (DASHBOARD)
+========================= */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 20px;
+  transition: 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #0b1220;
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+.card h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.card p {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* =========================
+   BOTÕES
+========================= */
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #4338ca;
+  transform: scale(1.03);
+}
+
+/* botão secundário */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* =========================
+   FOOTER / LOGOFF (fixo inferior)
+========================= */
+.logout-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: rgba(15, 23, 42, 0.98);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* botão logoff já existente pode herdar isso */
+.logout-bar button {
+  background: #ef4444;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-bar button:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+/* =========================
+   SCROLL PERSONALIZADO
+========================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ─── Re(start) Home ───────────────────────────────────── */
+
+/* ─── Ajuste de posição do hero ───── */
+:root {
+  --rs-offset-top: 100px; /* distância do topo */
+  --rs-offset-left: 50px; /* distância da sidebar */
+}
+
+.rs-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--rs-offset-top) 3rem 4rem var(--rs-offset-left);
+  gap: 2.5rem;
+}
+
+.rs-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 560px;
+}
+
+.rs-heading {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.rs-heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.rs-tagline {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.65;
+  max-width: 440px;
+  margin: 0;
+}
+
+/* ── Cards de país ── */
+
+.rs-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.rs-card {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    border-color 0.2s;
+}
+
+.rs-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.rs-card-flag-wrap {
+  width: 120px;
+  min-width: 120px;
+  height: 80px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.rs-card-flag-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rs-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 1.25rem;
+  flex: 1;
+}
+
+.rs-card-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.rs-card-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+}
+
+.rs-card-arrow {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.35);
+  padding-right: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* ── Chips ── */
+
+.rs-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rs-chip {
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 768px) {
+  .rs-hero {
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .rs-cards {
+    max-width: 100%;
+  }
+}
+/* ── Coluna direita ── */
+
+.rs-hero {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.rs-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.rs-right {
+  max-width: 340px;
+  padding-top: var(--rs-offset-top);
+  padding-right: 4rem;
+  flex-shrink: 0;
+}
+
+.rs-about {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.ap-country-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 40px 20px;
+}
+
+.ap-country-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(240px, 340px));
+  gap: 22px;
+  justify-content: center;
+}
+
+.ap-country-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 40px 20px;
+}
+
+/* GRID CENTRALIZADO */
+.ap-country-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(420px, 520px));
+  gap: 28px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CARD (MAIOR) */
+.ap-country-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  padding: 34px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  text-decoration: none;
+  color: #fff;
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
+}
+
+/* HOVER */
+.ap-country-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ICON MAIOR */
+.ap-country-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  margin-top: 4px;
+}
+
+/* TEXTO */
+.ap-country-text h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.ap-country-text p {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.78;
+  max-width: 360px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .ap-country-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-country-card {
+    padding: 26px;
+  }
+}

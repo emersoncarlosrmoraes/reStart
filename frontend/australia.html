@@ -1,117 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Re(start) - Austrália</title>
 
-<head>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
 
-<meta charset="UTF-8">
-<title>Re(start) - Austrália</title>
+  <body class="page-enter">
+    <!-- BACKGROUND -->
+    <div class="background"></div>
 
-<link rel="stylesheet" href="../css/style.css">
+    <!-- SIDEBAR -->
+    <div id="sidebar"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- NAVBAR -->
+    <div id="navbar"></div>
 
-</head>
+    <!-- CONTEÚDO DA PÁGINA -->
+    <div class="country-page">
+      <a href="australia-help.html" class="country-option">
+        <img
+          src="images/search.png"
+          class="country-page-flag"
+          alt="Buscar ajuda"
+        />
 
-<body class="page-enter">
+        <h2>Buscar ajuda</h2>
+        <p>
+          Encontre brasileiros que já vivem na Austrália e podem ajudar com
+          informações, dicas e apoio no seu recomeço
+        </p>
+      </a>
 
-<div class="background"></div>
+      <a href="australia-offer.html" class="country-option">
+        <img
+          src="images/help.png"
+          class="country-page-flag"
+          alt="Oferecer ajuda"
+        />
 
-<!-- SIDEBAR COMPONENT -->
-<div id="sidebar"></div>
+        <h2>Oferecer ajuda</h2>
+        <p>
+          Ajude quem está chegando na Austrália compartilhando sua experiência e
+          oferecendo orientação
+        </p>
+      </a>
+    </div>
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- SCRIPTS -->
+    <script src="../js/supabase.js"></script>
+    <script src="../js/components.js"></script>
 
-<!-- NAVBAR COMPONENT -->
-<div id="navbar"></div>
+    <script>
+      /* background movimento */
+      const bg = document.querySelector(".background");
 
-<!-- CONTEÚDO DA PÁGINA -->
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 60;
+        const y = (window.innerHeight / 2 - e.clientY) / 60;
 
-<div class="country-page">
+        bg.style.transform = `scale(1.1) translate(${x}px,${y}px)`;
+      });
 
-<a href="australia-help.html" class="country-option">
+      /* carregar usuário */
+      async function loadUser() {
+        const { data } = await supabase.auth.getUser();
 
-<img src="images/search.png" class="country-page-flag">
+        if (!data.user) {
+          window.location.href = "index.html";
+          return;
+        }
 
-<h2>Buscar ajuda</h2>
+        const name = data.user.user_metadata.name || "Usuário";
 
-<p>
-Encontre brasileiros que já vivem na Austrália e podem ajudar
-com informações, dicas e apoio no seu recomeço
-</p>
+        document.getElementById("userName").textContent = name;
 
-</a>
+        const initial = name.charAt(0).toUpperCase();
+        document.getElementById("avatar").textContent = initial;
+      }
 
+      loadUser();
 
-<a href="australia-offer.html" class="country-option">
+      /* ajustar slogan */
+      setTimeout(() => {
+        const slogan = document.querySelector(".home-slogan");
 
-<img src="images/help.png" class="country-page-flag">
-
-<h2>Oferecer ajuda</h2>
-
-<p>
-Ajude quem está chegando na Austrália compartilhando sua
-experiência e oferecendo orientação
-</p>
-
-</a>
-
-</div>
-
-
-<script src="../js/supabase.js"></script>
-<script src="../js/components.js"></script>
-
-<script>
-
-/* background movimento */
-
-const bg = document.querySelector(".background")
-
-document.addEventListener("mousemove",(e)=>{
-
-const x=(window.innerWidth/2-e.clientX)/60
-const y=(window.innerHeight/2-e.clientY)/60
-
-bg.style.transform=`scale(1.1) translate(${x}px,${y}px)`
-
-})
-
-/* carregar usuário */
-
-async function loadUser(){
-
-const { data } = await supabase.auth.getUser()
-
-if(!data.user){
-
-window.location.href="index.html"
-return
-
-}
-
-const name = data.user.user_metadata.name || "Usuário"
-
-document.getElementById("userName").textContent = name
-
-const initial = name.charAt(0).toUpperCase()
-
-document.getElementById("avatar").textContent = initial
-
-}
-
-loadUser()
-
-setTimeout(()=>{
-
-const slogan = document.querySelector(".home-slogan")
-
-if(slogan){
-slogan.textContent = "Austrália"
-}
-
-},200)
-
-</script>
-
-</body>
+        if (slogan) {
+          slogan.textContent = "Austrália";
+        }
+      }, 200);
+    </script>
+  </body>
 </html>
